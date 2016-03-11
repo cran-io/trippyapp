@@ -7,7 +7,7 @@
     tools:context=".activities.LoginActivity">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/trippyHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -17,85 +17,90 @@
 
     <EditText
         android:layout_marginTop="25sp"
-        android:id="@+id/editText2"
+        android:id="@+id/firstNameET"
         android:layout_width="wrap_content"
         android:layout_height="30sp"
         android:outlineProvider="background"
         android:background="#ffffff"
+        android:inputType="textCapWords"
         android:hint="First Name"
-        android:layout_below="@+id/imageView"
-        android:layout_alignLeft="@+id/editText"
-        android:layout_alignStart="@+id/editText"
-        android:layout_alignRight="@+id/imageView2"
-        android:layout_alignEnd="@+id/imageView2" />
+        android:layout_below="@+id/trippyHeader"
+        android:layout_alignLeft="@+id/confirmPassword"
+        android:layout_alignStart="@+id/confirmPassword"
+        android:layout_alignRight="@+id/signUpBtn"
+        android:layout_alignEnd="@+id/signUpBtn" />
 
     <EditText
-        android:id="@+id/editText3"
+        android:id="@+id/lastNameET"
         android:layout_width="wrap_content"
+        android:inputType="textCapWords"
         android:layout_height="30sp"
-        android:layout_alignEnd="@+id/editText2"
-        android:layout_alignLeft="@+id/editText2"
-        android:layout_alignRight="@+id/editText2"
-        android:layout_alignStart="@+id/editText2"
-        android:layout_below="@+id/editText2"
+        android:layout_alignEnd="@+id/firstNameET"
+        android:layout_alignLeft="@+id/firstNameET"
+        android:layout_alignRight="@+id/firstNameET"
+        android:layout_alignStart="@+id/firstNameET"
+        android:layout_below="@+id/firstNameET"
         android:background="#ffffff"
         android:hint="Last Name" />
 
     <EditText
-        android:id="@+id/editText6"
+        android:id="@+id/emailAddressET"
         android:layout_width="wrap_content"
         android:layout_height="30sp"
         android:background="#ffffff"
         android:hint="Email Address"
-        android:layout_below="@+id/editText3"
-        android:layout_alignLeft="@+id/editText3"
-        android:layout_alignStart="@+id/editText3"
-        android:layout_alignRight="@+id/editText3"
-        android:layout_alignEnd="@+id/editText3" />
+        android:layout_below="@+id/lastNameET"
+        android:inputType="textEmailAddress"
+        android:layout_alignLeft="@+id/lastNameET"
+        android:layout_alignStart="@+id/lastNameET"
+        android:layout_alignRight="@+id/lastNameET"
+        android:layout_alignEnd="@+id/lastNameET" />
 
     <EditText
-        android:id="@+id/editText4"
+        android:id="@+id/birthDate"
         android:layout_width="wrap_content"
         android:layout_height="30sp"
-        android:layout_alignEnd="@+id/imageView2"
-        android:layout_alignLeft="@+id/editText6"
-        android:layout_alignRight="@+id/imageView2"
-        android:layout_alignStart="@+id/editText6"
-        android:layout_below="@+id/editText6"
+        android:layout_alignEnd="@+id/signUpBtn"
+        android:layout_alignLeft="@+id/emailAddressET"
+        android:layout_alignRight="@+id/signUpBtn"
+        android:layout_alignStart="@+id/emailAddressET"
+        android:layout_below="@+id/emailAddressET"
+        android:inputType="date"
         android:background="#ffffff"
-        android:hint="Birth Date" />
+        android:hint="Birth Date DD/MM/YYYY" />
 
     <EditText
-        android:id="@+id/editText5"
+        android:id="@+id/password"
         android:layout_width="wrap_content"
         android:layout_height="30sp"
-        android:layout_alignEnd="@+id/editText4"
-        android:layout_alignLeft="@+id/editText4"
-        android:layout_alignRight="@+id/editText4"
-        android:layout_alignStart="@+id/editText4"
-        android:layout_below="@+id/editText4"
+        android:layout_alignEnd="@+id/birthDate"
+        android:layout_alignLeft="@+id/birthDate"
+        android:layout_alignRight="@+id/birthDate"
+        android:layout_alignStart="@+id/birthDate"
+        android:layout_below="@+id/birthDate"
         android:background="#ffffff"
         android:hint="Password"
         android:inputType="textPassword" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/confirmPassword"
         android:layout_width="wrap_content"
         android:layout_height="30sp"
         android:background="#ffffff"
         android:hint="Confirm Password"
-        android:layout_below="@+id/editText5"
-        android:layout_alignLeft="@+id/imageView2"
-        android:layout_alignStart="@+id/imageView2"
-        android:layout_alignRight="@+id/imageView2"
-        android:layout_alignEnd="@+id/imageView2" />
+        android:layout_below="@+id/password"
+        android:layout_alignLeft="@+id/signUpBtn"
+        android:layout_alignStart="@+id/signUpBtn"
+        android:layout_alignRight="@+id/signUpBtn"
+        android:inputType="textPassword"
+        android:layout_alignEnd="@+id/signUpBtn" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/signUpBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/signup_button"
-        android:layout_below="@+id/editText"
+        android:layout_below="@+id/confirmPassword"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="29dp" />
 
