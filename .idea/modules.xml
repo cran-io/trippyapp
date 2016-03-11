@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Trippy.iml" filepath="$PROJECT_DIR$/Trippy.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Trippy/Trippy-Trippy.iml" filepath="$PROJECT_DIR$/Trippy/Trippy-Trippy.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Trippy/Trippy.iml" filepath="$PROJECT_DIR$/Trippy/Trippy.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TrippyApp.iml" filepath="$PROJECT_DIR$/TrippyApp.iml" />
     </modules>
   </component>
 </project>
