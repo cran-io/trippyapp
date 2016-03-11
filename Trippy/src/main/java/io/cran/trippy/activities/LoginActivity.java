@@ -1,7 +1,9 @@
-package io.cran.trippy;
+package io.cran.trippy.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+
+import io.cran.trippy.R;
 
 /**
  * A login screen that offers login via email/password.
