@@ -12,16 +12,24 @@
     android:src="@drawable/trippy_login"
     android:layout_centerHorizontal="true"
     android:layout_marginTop="75dp"/>
-    <ImageView
+
+    
+    <com.facebook.login.widget.LoginButton
         android:id="@+id/facebookLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/googleLogin"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/facebook_login" />
+        android:textSize="16sp"
 
-    <ImageView
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:layout_marginBottom="10dp"
+        android:layout_alignLeft="@+id/googleLogin"
+        android:layout_alignStart="@+id/googleLogin"
+        android:layout_alignRight="@+id/googleLogin"
+        android:layout_alignEnd="@+id/googleLogin"
+        android:layout_above="@+id/googleLogin" />
+
+    <com.google.android.gms.common.SignInButton
         android:id="@+id/googleLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
