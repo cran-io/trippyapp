@@ -35,7 +35,7 @@ public class TourAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
+    public TourPojo getItem(int position) {
         return mTourList.get(position);
     }
 
@@ -66,12 +66,27 @@ public class TourAdapter extends BaseAdapter {
         viewHolder.description.setText(mTourList.get(position).getDescription());
 
 
+        handleButtonClick(convertView, position);
+
         return convertView;
     }
 
+    private void handleButtonClick(final View rowView, final int pos)
+    {
+        final ImageView favourite = (ImageView) rowView.findViewById(R.id.favourite);
+
+        favourite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TourPojo tourData = getItem(pos);
+                favourite.setImageResource(R.drawable.favourite_tours);
+            }
+        });
+    }
     private class MyViewHolder {
         TextView tourName;
         ImageView tourPic;
+        ImageView favourite;
         TextView description;
         ImageView transport;
         ImageView weather;

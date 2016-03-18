@@ -117,7 +117,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
-
+        Toast.makeText(LoginActivity.this, "" + connectionResult.getErrorMessage(), Toast.LENGTH_LONG).show();
+        Log.e("Error", "" + connectionResult.getErrorMessage());
     }
 
     @Override

@@ -1,6 +1,8 @@
 package io.cran.trippy.activities;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -27,8 +29,12 @@ import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
+import bolts.AppLinks;
 import io.cran.trippy.R;
 import io.cran.trippy.adapters.TourAdapter;
 import io.cran.trippy.pojo.TourPojo;
@@ -41,7 +47,14 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
+
+        Uri targetUrl = AppLinks.getTargetUrlFromInboundIntent(this, getIntent());
+        if (targetUrl != null) {
+            Log.i("Activity", "App Link Target URL: " + targetUrl.toString());
+        }
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -60,6 +73,17 @@ public class MainActivity extends AppCompatActivity
             TextView usermail = (TextView) headerView.findViewById(R.id.userMail);
             usermail.setText(email);
             ImageView userPic= (ImageView) headerView.findViewById(R.id.profilePic);
+            URL url = null;
+            try {
+                url = new URL(imageUrl);
+                Bitmap image = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                userPic.setImageBitmap(image);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
 
         }
 
@@ -126,6 +150,9 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_tours) {
             // Handle the camera action
         } else if (id == R.id.nav_friends) {
+
+            Intent i = new Intent(MainActivity.this, ShareWithFriends.class);
+            startActivity(i);
 
         } else if (id == R.id.nav_notifications) {
 
