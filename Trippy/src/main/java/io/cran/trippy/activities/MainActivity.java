@@ -5,8 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -15,33 +13,31 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
-import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 import bolts.AppLinks;
 import io.cran.trippy.R;
 import io.cran.trippy.adapters.TourAdapter;
-import io.cran.trippy.pojo.TourPojo;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private ArrayList<ParseObject> availableTours = new ArrayList();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,12 +84,6 @@ public class MainActivity extends AppCompatActivity
         }
 
 
-        ListView tourList = (ListView) findViewById(R.id.tourList);
-
-        ArrayList<TourPojo> availableTours = populateTours();
-        TourAdapter tourAdapter = new TourAdapter(this, availableTours);
-        tourList.setAdapter(tourAdapter);
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -102,23 +92,36 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    private ArrayList<TourPojo> populateTours() {
-        TourPojo tour1 = new TourPojo(0, "Helicopter tour", "Fly over Buenos Aires city. Discover new places and get to see an unique city in an unique way", R.drawable.helicopter_tour, "Helicopter", "Sunny", "Sightseeing");
-        TourPojo tour2 = new TourPojo(1, "Bicycle tour", "Cycle around Buenos Aires city. Discover new places and get to see a unique city in a fun way", R.drawable.bicycle_tour, "Bicycle", "Sunny", "Seightseeing");
-        TourPojo tour3 = new TourPojo(2, "Pub Crawl", "Get to know the best pubs of Buenos Aires nightlife. Walk into the coolest places.", R.drawable.pubcrawl, "Walking", "Sunny", "Food and drink");
 
-        ArrayList<TourPojo> availableTours = new ArrayList();
-        availableTours.add(tour1);
-        availableTours.add(tour2);
-        availableTours.add(tour3);
+
+    private ArrayList<ParseObject> populateTours() {
+
+        ParseQuery query = new ParseQuery("Tour");
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> tours, ParseException e) {
+                if (e == null) {
+                    ListView tourList = (ListView) findViewById(R.id.tourList);
+
+                    for (ParseObject tour : tours) {
+                        availableTours.add(tour);
+                    }
+                    TourAdapter tourAdapter = new TourAdapter(MainActivity.this, getApplication(), availableTours);
+                    tourList.setAdapter(tourAdapter);
+
+                } else {
+                    Log.e("Parse Error",""+e.getMessage());
+                }
+            }
+        });
 
         return availableTours;
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
+        populateTours();
         AppEventsLogger.activateApp(this);
     }
 
@@ -146,12 +149,13 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        Intent i;
 
         if (id == R.id.nav_tours) {
-            // Handle the camera action
+            i= new Intent(MainActivity.this, FavouriteTours.class);
+            startActivity(i);
         } else if (id == R.id.nav_friends) {
-
-            Intent i = new Intent(MainActivity.this, ShareWithFriends.class);
+            i = new Intent(MainActivity.this, ShareWithFriends.class);
             startActivity(i);
 
         } else if (id == R.id.nav_notifications) {

@@ -57,7 +57,8 @@
                 <data android:scheme="io.cran.trippy" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.ShareWithFriends"></activity>
+        <activity android:name=".activities.ShareWithFriends" />
+        <activity android:name=".activities.FavouriteTours"></activity>
     </application>
 
 </manifest>
