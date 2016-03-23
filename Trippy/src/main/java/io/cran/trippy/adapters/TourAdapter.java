@@ -99,8 +99,9 @@ public class TourAdapter extends BaseAdapter {
         favourite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ParseObject tourSelected = getItem(pos);
+
                 if (!isChecked) {
-                    ParseObject tourSelected = getItem(pos);
                     favourite.setImageResource(R.drawable.favourite_tours);
                     mTourFavourites.add(tourSelected);
                     mCurrentUser.saveInBackground(new SaveCallback() {
@@ -112,6 +113,20 @@ public class TourAdapter extends BaseAdapter {
                         }
                     });
                     isChecked=true;
+                }
+                else{
+                    favourite.setImageResource(R.drawable.favourite);
+                    mTourFavourites.remove(tourSelected);
+                    mCurrentUser.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e != null) {
+                                Log.e(TAG, e.getMessage());
+                            }
+                        }
+                    });
+                    isChecked=false;
+
                 }
             }
         });

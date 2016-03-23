@@ -107,7 +107,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             Intent i = new Intent(LoginActivity.this, MainActivity.class);
             i.putExtra("User name",acct.getDisplayName());
             i.putExtra("User mail",acct.getEmail());
-            i.putExtra("User pic", acct.getPhotoUrl());
+            i.setData( acct.getPhotoUrl());
             startActivity(i);
         } else {
             // Signed out, show unauthenticated UI.
