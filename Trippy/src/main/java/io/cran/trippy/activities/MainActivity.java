@@ -1,43 +1,41 @@
 package io.cran.trippy.activities;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.facebook.appevents.AppEventsLogger;
-import com.parse.FindCallback;
-import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
 import bolts.AppLinks;
 import io.cran.trippy.R;
-import io.cran.trippy.adapters.TourAdapter;
+import io.cran.trippy.fragments.FavouriteToursFragment;
+import io.cran.trippy.fragments.TourDescription;
+import io.cran.trippy.fragments.ToursFragment;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, ToursFragment.ToursFragmentListener {
 
-    private ArrayList<ParseObject> availableTours = new ArrayList();
+    private FragmentManager mFm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,46 +88,27 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-    }
-
-
-
-    private ArrayList<ParseObject> populateTours() {
-
-        ParseQuery query = new ParseQuery("Tour");
-        query.findInBackground(new FindCallback<ParseObject>() {
-            public void done(List<ParseObject> tours, ParseException e) {
-                if (e == null) {
-                    ListView tourList = (ListView) findViewById(R.id.tourList);
-
-                    for (ParseObject tour : tours) {
-                        availableTours.add(tour);
-                    }
-                    TourAdapter tourAdapter = new TourAdapter(MainActivity.this, getApplication(), availableTours);
-                    tourList.setAdapter(tourAdapter);
-
-                } else {
-                    Log.e("Parse Error",""+e.getMessage());
-                }
-            }
-        });
-
-        return availableTours;
+        mFm = getFragmentManager();
+        FragmentTransaction ft = mFm.beginTransaction();
+        Fragment toursFragment = ToursFragment.newInstance();
+        ft.add(R.id.container, toursFragment, ToursFragment.TAG);
+        ft.commit();
 
     }
+
+
+
+
 
     @Override
     protected void onResume() {
         super.onResume();
-        populateTours();
         AppEventsLogger.activateApp(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-
-        // Logs 'app deactivate' App Event.
         AppEventsLogger.deactivateApp(this);
     }
 
@@ -152,8 +131,12 @@ public class MainActivity extends AppCompatActivity
         Intent i;
 
         if (id == R.id.nav_tours) {
-            i= new Intent(MainActivity.this, FavouriteTours.class);
-            startActivity(i);
+            mFm = getFragmentManager();
+            FragmentTransaction ft = mFm.beginTransaction();
+            Fragment favToursFragment = FavouriteToursFragment.newInstance();
+            ft.replace(R.id.container, favToursFragment);
+            ft.commit();
+
         } else if (id == R.id.nav_friends) {
             i = new Intent(MainActivity.this, ShareWithFriends.class);
             startActivity(i);
@@ -173,5 +156,13 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void showTourDescription() {
+        mFm = getFragmentManager();
+        FragmentTransaction ft = mFm.beginTransaction();
+        Fragment tourDescription = TourDescription.newInstance();
+        ft.replace(R.id.container, tourDescription);
+        ft.commit();
     }
 }

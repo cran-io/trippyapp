@@ -1,0 +1,237 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context="io.cran.trippy.fragments.TourDescription">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:alpha="1"
+        android:src="@drawable/book_tour" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:paddingTop="40sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imageTour"
+                android:src="@drawable/helicopter_tour"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#e6e6e6">
+
+                <TextView
+                    android:id="@+id/tourNameDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="Tour Name"
+                    android:textColor="#630a80"
+                    android:textSize="23sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/favourite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/tourNameDescription"
+                    android:layout_alignStart="@+id/tourNameDescription"
+                    android:layout_below="@+id/tourNameDescription"
+                    android:layout_marginLeft="30sp"
+                    android:layout_marginTop="10sp"
+                    android:src="@drawable/tour_favourite" />
+
+                <ImageView
+                    android:id="@+id/share"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tourNameDescription"
+                    android:layout_marginLeft="20sp"
+                    android:layout_marginTop="10sp"
+                    android:layout_toRightOf="@id/favourite"
+                    android:src="@drawable/share_tour" />
+
+                <TextView
+                    android:id="@+id/tourDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/share"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20sp"
+                    android:paddingLeft="10sp"
+                    android:paddingRight="10sp"
+                    android:text="Tour Description"
+                    android:textColor="#630a80"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:id="@+id/tourTransport"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/tourWeather"
+                    android:layout_alignLeft="@+id/tourNameDescription"
+                    android:layout_alignStart="@+id/tourNameDescription"
+                    android:layout_marginTop="10sp"
+                    android:src="@drawable/tour_bicycle" />
+
+                <ImageView
+                    android:id="@+id/tourWeather"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tourDescription"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="10sp"
+                    android:layout_marginTop="10sp"
+                    android:src="@drawable/tour_sun" />
+
+                <ImageView
+                    android:id="@+id/tourType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/tourTransport"
+                    android:layout_toEndOf="@+id/share"
+                    android:layout_toRightOf="@+id/share"
+                    android:src="@drawable/tour_sightseeing" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#dfcde5">
+
+                <TextView
+                    android:id="@+id/tourOwner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20sp"
+                    android:text="Tour Owner" />
+
+                <TextView
+                    android:id="@+id/tourCant"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tourOwner"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="5sp"
+                    android:text="Tour Quantity" />
+
+                <TextView
+                    android:id="@+id/seeAllTours"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tourCant"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="20sp"
+                    android:layout_marginTop="5sp"
+                    android:text="See all tours from this agency"
+                    android:textColor="#72218c" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tourSubtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20sp"
+                    android:text="The Ultimate Buenos Aires City Tour"
+                    android:textColor="#000000"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tourInformation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tourSubtitle"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="5sp"
+                    android:text="See the city in one day!"
+                    android:textColor="#000000" />
+
+                <ImageView
+                    android:id="@+id/tourTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tourInformation"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20sp"
+                    android:src="@drawable/tour_time" />
+
+                <ImageView
+                    android:id="@+id/tourLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tourInformation"
+                    android:layout_marginRight="70sp"
+                    android:layout_marginTop="20sp"
+                    android:layout_toLeftOf="@id/tourTime"
+                    android:src="@drawable/tour_location" />
+
+
+                <ImageView
+                    android:id="@+id/tourCapacity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tourInformation"
+                    android:layout_marginLeft="70sp"
+                    android:layout_marginTop="20sp"
+                    android:layout_toRightOf="@id/tourTime"
+                    android:src="@drawable/tour_capacity" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_toLeftOf="@+id/tourInformation"
+                    android:layout_toStartOf="@+id/tourInformation"
+                    android:text="San Telmo"
+                    android:textColor="#000000" />
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:text="Everyday 10AM"
+                    android:textColor="#000000" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/textView"
+                    android:layout_toEndOf="@+id/tourInformation"
+                    android:layout_toRightOf="@+id/tourInformation"
+                    android:maxWidth="80sp"
+                    android:layout_marginBottom="20sp"
+                    android:text="Maximum 12PAX"
+                    android:textAlignment="center"
+                    android:textColor="#000000" />
+            </RelativeLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</RelativeLayout>
+
+

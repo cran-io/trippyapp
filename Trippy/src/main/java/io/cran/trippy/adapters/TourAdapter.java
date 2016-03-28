@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,11 +18,13 @@ import com.parse.ParseObject;
 import com.parse.ParseRelation;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Set;
 
 import io.cran.trippy.R;
+import io.cran.trippy.activities.MainActivity;
 import io.cran.trippy.utils.AppPreferences;
 
 /**
@@ -79,8 +82,8 @@ public class TourAdapter extends BaseAdapter {
         viewHolder.tourName.setText(mTourList.get(position).getString("name"));
 
         viewHolder.tourPic=(ImageView) convertView.findViewById(R.id.tourImage);
-        Bitmap bmp = BitmapFactory.decodeFile(String.valueOf(mTourList.get(position).getParseFile("image")));
-        viewHolder.tourPic.setImageBitmap(bmp);
+        Uri imageUri= Uri.parse(mTourList.get(position).getParseFile("image").getUrl());
+        Picasso.with(convertView.getContext()).load(imageUri.toString()).into(viewHolder.tourPic);
 
         viewHolder.description= (TextView) convertView.findViewById(R.id.tourDescription);
         viewHolder.description.setText(mTourList.get(position).getString("description"));
@@ -94,7 +97,6 @@ public class TourAdapter extends BaseAdapter {
     private void handleButtonClick(final View rowView, final int pos)
     {
         final ImageView favourite = (ImageView) rowView.findViewById(R.id.favourite);
-
 
         favourite.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,7 +132,10 @@ public class TourAdapter extends BaseAdapter {
                 }
             }
         });
+
+
     }
+
     private class MyViewHolder {
         TextView tourName;
         ImageView tourPic;
