@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.appevents.AppEventsLogger;
 import com.squareup.picasso.Picasso;
@@ -28,9 +29,10 @@ import io.cran.trippy.fragments.ToursFragment;
 import io.cran.trippy.utils.CircleImageView;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, ToursFragment.ToursFragmentListener {
+        implements NavigationView.OnNavigationItemSelectedListener, ToursFragment.ToursFragmentListener, TourDescription.TourDescriptionListener {
 
     private FragmentManager mFm;
+    private String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +57,7 @@ public class MainActivity extends AppCompatActivity
 
         if (intent.getExtras()!= null) {
             String name = getIntent().getStringExtra("User name");
-            String email = getIntent().getStringExtra("User mail");
+             email = getIntent().getStringExtra("User mail");
             Uri imageUri= getIntent().getData();
             TextView username = (TextView) headerView.findViewById(R.id.userName);
             username.setText(name);
@@ -147,5 +149,19 @@ public class MainActivity extends AppCompatActivity
         Fragment tourDescription = TourDescription.newInstance(parseObject);
         ft.replace(R.id.container, tourDescription);
         ft.commit();
+    }
+
+    @Override
+    public void sendEmail(String emailAddress, String tourName) {
+        Intent i = new Intent(Intent.ACTION_SEND);
+        i.setType("message/rfc822");
+        i.putExtra(android.content.Intent.EXTRA_EMAIL,new String[]{emailAddress});
+        i.putExtra(Intent.EXTRA_SUBJECT, "Book Tour: "+tourName+"");
+        i.putExtra(Intent.EXTRA_TEXT   , "I would like to book the "+tourName+" for the day: (complete day), for (complete quantity of people) ");
+        try {
+            startActivity(Intent.createChooser(i, "Send mail..."));
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(MainActivity.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+        }
     }
 }

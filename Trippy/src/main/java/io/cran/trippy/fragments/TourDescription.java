@@ -1,7 +1,9 @@
 package io.cran.trippy.fragments;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -71,12 +73,13 @@ public class TourDescription extends Fragment {
         final View root = inflater.inflate(R.layout.fragment_tour_description, container, false);
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Tour");
-        query.whereEqualTo("objectId",tourId);
+        query.whereEqualTo("objectId", tourId);
         query.getFirstInBackground(new GetCallback<ParseObject>() {
             @Override
             public void done(ParseObject object, ParseException e) {
                 if (e == null) {
                     selectedTour.add(object);
+
                     TextView tourName = (TextView) root.findViewById(R.id.tourNameDescription);
                     tourName.setText(selectedTour.get(0).getString("name"));
 
@@ -87,10 +90,10 @@ public class TourDescription extends Fragment {
                     TextView description = (TextView) root.findViewById(R.id.tourDescription);
                     description.setText(selectedTour.get(0).getString("description"));
 
-                    final String ownerId= selectedTour.get(0).getString("ownerId");
+                    final String ownerId = selectedTour.get(0).getString("ownerId");
 
                     ParseQuery<ParseObject> query = ParseQuery.getQuery("TourOwner");
-                    query.whereEqualTo("objectId",ownerId);
+                    query.whereEqualTo("objectId", ownerId);
                     query.getFirstInBackground(new GetCallback<ParseObject>() {
                         @Override
                         public void done(ParseObject object, ParseException e) {
@@ -99,13 +102,20 @@ public class TourDescription extends Fragment {
                                 TextView ownerName = (TextView) root.findViewById(R.id.tourOwner);
                                 ownerName.setText(tourOwner.get(0).getString("name"));
 
-                                TextView cantTours= (TextView) root.findViewById(R.id.tourCant);
-                                cantTours.setText(""+tourOwner.get(0).getInt("tourQuantity")+" enrolled tours");
+                                TextView cantTours = (TextView) root.findViewById(R.id.tourCant);
+                                cantTours.setText("" + tourOwner.get(0).getInt("tourQuantity") + " enrolled tours");
 
-                                CircleImageView profilePic= (CircleImageView) root.findViewById(R.id.profilePic);
+                                CircleImageView profilePic = (CircleImageView) root.findViewById(R.id.profilePic);
                                 Uri imageUri = Uri.parse(tourOwner.get(0).getParseFile("profilePic").getUrl());
                                 Picasso.with(root.getContext()).load(imageUri.toString()).into(profilePic);
 
+                                ImageView bookThisTourBtn = (ImageView) root.findViewById(R.id.bookTour);
+                                bookThisTourBtn.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        mListener.sendEmail(tourOwner.get(0).getString("email"),selectedTour.get(0).getString("name"));
+                                    }
+                                });
 
                             } else {
                                 Log.e("Parse Error", e.getMessage());
@@ -119,6 +129,7 @@ public class TourDescription extends Fragment {
             }
         });
 
+
         return root;
     }
 
@@ -128,12 +139,12 @@ public class TourDescription extends Fragment {
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof TourDescriptionListener) {
-            mListener = (TourDescriptionListener) context;
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof TourDescriptionListener) {
+            mListener = (TourDescriptionListener) activity;
         } else {
-            throw new RuntimeException(context.toString()
+            throw new RuntimeException(activity.toString()
                     + " must implement TourDescriptionListener");
         }
     }
@@ -162,6 +173,6 @@ public class TourDescription extends Fragment {
      */
     public interface TourDescriptionListener {
         // TODO: Update argument type and name
-        void sendEmail();
+        void sendEmail(String email, String tourName);
     }
 }
