@@ -1,16 +1,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     tools:context="io.cran.trippy.fragments.TourDescription">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:alpha="1"
-        android:src="@drawable/book_tour" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -26,7 +21,8 @@
                 android:id="@+id/imageTour"
                 android:src="@drawable/helicopter_tour"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="180sp"
+                android:scaleType="fitXY" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -34,6 +30,7 @@
                 android:background="#e6e6e6">
 
                 <TextView
+                    android:paddingTop="20sp"
                     android:id="@+id/tourNameDescription"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -78,16 +75,6 @@
                     android:textSize="15sp" />
 
                 <ImageView
-                    android:id="@+id/tourTransport"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/tourWeather"
-                    android:layout_alignLeft="@+id/tourNameDescription"
-                    android:layout_alignStart="@+id/tourNameDescription"
-                    android:layout_marginTop="10sp"
-                    android:src="@drawable/tour_bicycle" />
-
-                <ImageView
                     android:id="@+id/tourWeather"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -98,12 +85,24 @@
                     android:src="@drawable/tour_sun" />
 
                 <ImageView
+                    android:id="@+id/tourTransport"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/tourWeather"
+                    android:layout_marginRight="10sp"
+                    android:layout_toLeftOf="@id/tourWeather"
+                    android:layout_marginTop="10sp"
+                    android:src="@drawable/tour_bicycle" />
+
+
+                <ImageView
                     android:id="@+id/tourType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/tourTransport"
-                    android:layout_toEndOf="@+id/share"
-                    android:layout_toRightOf="@+id/share"
+                    android:layout_alignTop="@+id/tourTransport"
+                    android:layout_marginLeft="10sp"
+                    android:layout_toRightOf="@+id/tourWeather"
+                    android:paddingBottom="20sp"
                     android:src="@drawable/tour_sightseeing" />
 
             </RelativeLayout>
@@ -113,12 +112,24 @@
                 android:layout_height="wrap_content"
                 android:background="#dfcde5">
 
+                <io.cran.trippy.utils.CircleImageView
+                    android:id="@+id/profilePic"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_alignTop="@+id/tourOwner"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_toLeftOf="@+id/tourOwner"
+                    android:layout_toStartOf="@+id/tourOwner"
+                    android:paddingTop="35sp" />
+
                 <TextView
                     android:id="@+id/tourOwner"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="20sp"
+                    android:layout_marginLeft="20sp"
+                    android:textStyle="bold"
                     android:text="Tour Owner" />
 
                 <TextView
@@ -127,6 +138,8 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tourOwner"
                     android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="20sp"
+                    android:layout_toRightOf="@id/profilePic"
                     android:layout_marginTop="5sp"
                     android:text="Tour Quantity" />
 
@@ -136,7 +149,9 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tourCant"
                     android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="20sp"
                     android:layout_marginBottom="20sp"
+                    android:layout_toRightOf="@id/profilePic"
                     android:layout_marginTop="5sp"
                     android:text="See all tours from this agency"
                     android:textColor="#72218c" />
@@ -203,6 +218,7 @@
                     android:layout_toLeftOf="@+id/tourInformation"
                     android:layout_toStartOf="@+id/tourInformation"
                     android:text="San Telmo"
+                    android:paddingBottom="20sp"
                     android:textColor="#000000" />
 
                 <TextView
@@ -212,22 +228,28 @@
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
                     android:text="Everyday 10AM"
+                    android:paddingBottom="20sp"
                     android:textColor="#000000" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@+id/textView"
-                    android:layout_toEndOf="@+id/tourInformation"
-                    android:layout_toRightOf="@+id/tourInformation"
+                    android:layout_toEndOf="@+id/textView"
+                    android:layout_toRightOf="@+id/textView"
                     android:maxWidth="80sp"
                     android:layout_marginBottom="20sp"
-                    android:text="Maximum 12PAX"
-                    android:textAlignment="center"
+                    android:text="Max12PAX"
+                    android:paddingBottom="30sp"
                     android:textColor="#000000" />
+
             </RelativeLayout>
 
-
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:src="@drawable/book_tour" />
         </LinearLayout>
     </ScrollView>
 

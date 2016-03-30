@@ -1,6 +1,7 @@
 package io.cran.trippy.activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -12,6 +13,8 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.Auth;
@@ -21,6 +24,13 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Arrays;
 
 import io.cran.trippy.R;
 
@@ -32,6 +42,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private CallbackManager callbackManager;
     private GoogleApiClient mGoogleApiClient;
     private static final int RC_SIGN_IN = 9001;
+    private String email=null;
+    private String birthday= null;
+    private String name=null;
+    private String id=null;
+    private Uri imageUri=null;
 
 
     @Override
@@ -55,12 +70,47 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         callbackManager = CallbackManager.Factory.create();
 
         facebookLoginBtn = (LoginButton) findViewById(R.id.facebookLogin);
-        facebookLoginBtn.setReadPermissions("user_friends");
+        facebookLoginBtn.setReadPermissions(Arrays.asList("public_profile", "email", "user_birthday", "user_friends"));
         facebookLoginBtn.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                Intent i = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(i);
+                GraphRequest request = GraphRequest.newMeRequest(
+                        loginResult.getAccessToken(),
+                        new GraphRequest.GraphJSONObjectCallback() {
+                            @Override
+                            public void onCompleted(JSONObject object, GraphResponse response) {
+                                Log.v("LoginActivity", response.toString());
+
+                                try {
+                                    email = object.getString("email");
+                                    birthday = object.getString("birthday"); // 01/31/1980 format
+                                    name= object.getString("name");
+                                    id= object.getString("id");
+
+                                    imageUri= Uri.parse("http://graph.facebook.com/"+id+"/picture?type=large");
+
+                                    Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                                    i.putExtra("User name",name);
+                                    i.putExtra("User mail", email);
+                                    i.setData(imageUri);
+                                    startActivity(i);
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                            }
+                        });
+
+
+
+
+                Bundle parameters = new Bundle();
+                parameters.putString("fields", "id,name,email,gender,birthday");
+                request.setParameters(parameters);
+                request.executeAsync();
+
+
             }
 
             @Override
@@ -76,10 +126,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         });
 
         TextView signUpLink = (TextView) findViewById(R.id.signUpLink);
+        assert signUpLink != null;
         signUpLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(LoginActivity.this, SignUpActivity.class);
+
                 startActivity(i);
             }
         });
@@ -107,7 +159,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             Intent i = new Intent(LoginActivity.this, MainActivity.class);
             i.putExtra("User name",acct.getDisplayName());
             i.putExtra("User mail",acct.getEmail());
-            i.setData( acct.getPhotoUrl());
+            i.setData(acct.getPhotoUrl());
             startActivity(i);
         } else {
             // Signed out, show unauthenticated UI.

@@ -4,8 +4,6 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -17,20 +15,17 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.appevents.AppEventsLogger;
-
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
+import com.squareup.picasso.Picasso;
 
 import bolts.AppLinks;
 import io.cran.trippy.R;
 import io.cran.trippy.fragments.FavouriteToursFragment;
 import io.cran.trippy.fragments.TourDescription;
 import io.cran.trippy.fragments.ToursFragment;
+import io.cran.trippy.utils.CircleImageView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, ToursFragment.ToursFragmentListener {
@@ -61,24 +56,14 @@ public class MainActivity extends AppCompatActivity
         if (intent.getExtras()!= null) {
             String name = getIntent().getStringExtra("User name");
             String email = getIntent().getStringExtra("User mail");
-            String imageUrl= getIntent().getStringExtra("User pic");
+            Uri imageUri= getIntent().getData();
             TextView username = (TextView) headerView.findViewById(R.id.userName);
             username.setText(name);
             TextView usermail = (TextView) headerView.findViewById(R.id.userMail);
             usermail.setText(email);
-            ImageView userPic= (ImageView) headerView.findViewById(R.id.profilePic);
-            URL url = null;
-            try {
-                url = new URL(imageUrl);
-                Bitmap image = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-                userPic.setImageBitmap(image);
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            CircleImageView userPic= (CircleImageView) headerView.findViewById(R.id.profilePic);
 
-
+            Picasso.with(this).load(imageUri.toString()).into(userPic);
         }
 
 
@@ -95,8 +80,6 @@ public class MainActivity extends AppCompatActivity
         ft.commit();
 
     }
-
-
 
 
 
@@ -158,10 +141,10 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    public void showTourDescription() {
+    public void showTourDescription(String parseObject) {
         mFm = getFragmentManager();
         FragmentTransaction ft = mFm.beginTransaction();
-        Fragment tourDescription = TourDescription.newInstance();
+        Fragment tourDescription = TourDescription.newInstance(parseObject);
         ft.replace(R.id.container, tourDescription);
         ft.commit();
     }

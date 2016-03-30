@@ -77,7 +77,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
         android:layout_below="@id/tourImage"
-        android:padding="10sp"
+        android:paddingBottom="10sp"
         android:text="Tour Description"
         android:textColor="#660e82" />
 

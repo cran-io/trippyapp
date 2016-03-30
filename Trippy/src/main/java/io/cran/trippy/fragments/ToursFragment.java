@@ -109,7 +109,7 @@ public class ToursFragment extends android.app.Fragment {
                     mTourList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                          mListener.showTourDescription();
+                          mListener.showTourDescription(availableTours.get(position).getObjectId());
                         }
                     });
 
@@ -139,6 +139,6 @@ public class ToursFragment extends android.app.Fragment {
     public interface ToursFragmentListener {
         // TODO: Update argument type and name
 
-        void showTourDescription();
+        void showTourDescription(String objectId);
     }
 }

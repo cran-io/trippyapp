@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/nav_header_height"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#660e82"
     android:gravity="bottom"
     android:orientation="vertical"
@@ -11,24 +12,31 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <ImageView
+    <io.cran.trippy.utils.CircleImageView
         android:id="@+id/profilePic"
-        android:layout_width="70sp"
-        android:layout_height="70sp"
-        android:scaleType="fitXY"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:src="@android:drawable/sym_def_app_icon" />
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_centerInParent="true"
+        android:paddingTop="35sp"
+        app:civ_border_color="#ffffff"
+        app:civ_border_width="2sp"
+        android:layout_gravity="center_horizontal" />
+
 
     <TextView
         android:id="@+id/userName"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/profilePic"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     <TextView
         android:id="@+id/userMail"
+        android:layout_below="@id/userName"
+        android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
-</LinearLayout>
+</RelativeLayout>

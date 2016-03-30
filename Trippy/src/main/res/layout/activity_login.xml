@@ -11,7 +11,8 @@
     android:layout_height="wrap_content"
     android:src="@drawable/trippy_login"
     android:layout_centerHorizontal="true"
-    android:layout_marginTop="75dp"/>
+    android:layout_marginTop="75dp"
+    android:id="@+id/imageView" />
 
     
     <com.facebook.login.widget.LoginButton
@@ -19,24 +20,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="16sp"
-
         android:paddingTop="15dp"
         android:paddingBottom="15dp"
         android:layout_marginBottom="10dp"
-        android:layout_alignLeft="@+id/googleLogin"
-        android:layout_alignStart="@+id/googleLogin"
-        android:layout_alignRight="@+id/googleLogin"
-        android:layout_alignEnd="@+id/googleLogin"
-        android:layout_above="@+id/googleLogin" />
+        android:layout_above="@+id/googleLogin"
+        android:layout_alignLeft="@+id/imageView"
+        android:layout_alignStart="@+id/imageView"
+        android:layout_alignRight="@+id/imageView"
+        android:layout_alignEnd="@+id/imageView" />
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/googleLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
         android:layout_marginBottom="50dp"
-        android:background="@drawable/google_login" />
+        android:layout_alignLeft="@+id/facebookLogin"
+        android:layout_alignStart="@+id/facebookLogin"
+        android:layout_alignRight="@+id/facebookLogin"
+        android:layout_alignEnd="@+id/facebookLogin" />
 
     <TextView
         android:id="@+id/signUpLink"
