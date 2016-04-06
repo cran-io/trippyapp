@@ -5,8 +5,8 @@
     tools:context="io.cran.trippy.fragments.ToursFragment">
 
     <ListView
-        android:id="@+id/tourList"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingTop="40sp" />
+    android:id="@+id/tourList"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="40sp" />
 </FrameLayout>

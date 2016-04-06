@@ -33,4 +33,79 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_maps">Map</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Strings related to Settings -->
+
+    <!-- Example General settings -->
+    <string name="pref_header_general">General</string>
+
+    <string name="pref_title_social_recommendations">Enable social recommendations</string>
+    <string name="pref_description_social_recommendations">Recommendations for people to contact
+        based on your message history
+    </string>
+
+    <string name="pref_title_display_name">Display name</string>
+    <string name="pref_default_display_name">John Smith</string>
+
+    <string name="pref_title_sortBy">Sort By</string>
+    <string-array name="pref_tourtype_list_titles">
+        <item>Newer Tours</item>
+        <item>Best Rated First</item>
+        <item>No order</item>
+    </string-array>
+
+    <string-array name="pref_category_list_titles">
+        <item>Nightlife</item>
+        <item>Sightseeing</item>
+        <item>Show</item>
+        <item>Food/Drinks</item>
+    </string-array>
+
+    <string-array name="pref_ranking_list_titles">
+        <item>More than 3 stars</item>
+        <item>All tours</item>
+    </string-array>
+
+    <string-array name="pref_values_list_titles">
+        <item>-1</item>
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+    <string-array name="pref_duration_list_titles">
+        <item>1 hour</item>
+        <item>Less than 3 hours</item>
+        <item>Half Day</item>
+        <item>All day</item>
+    </string-array>
+
+    <string-array name="pref_location_list_titles">
+        <item>La Boca</item>
+        <item>Puerto Madero</item>
+        <item>San Telmo</item>
+        <item>Palermo</item>
+        <item>All</item>
+    </string-array>
+
+
+    <string name="pref_title_system_sync_settings">System sync settings</string>
+
+    <!-- Example settings for Notifications -->
+    <string name="pref_header_notifications">Notifications</string>
+
+    <string name="pref_title_new_message_notifications">New message notifications</string>
+
+    <string name="pref_title_ringtone">Ringtone</string>
+    <string name="pref_ringtone_silent">Silent</string>
+
+    <string name="pref_title_vibrate">Vibrate</string>
+    <string name="sorting">Sorting</string>
+    <string name="available_preferences">Available</string>
+    <string name="pref_title_ranking">Rating</string>
+    <string name="pref_title_category">Category</string>
+    <string name="pref_title_duration">Duration</string>
+    <string name="pref_title_location">Location</string>
+    <string name="pref_title_weatherFriendly">Weather: Rainy friend tours</string>
 </resources>

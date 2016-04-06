@@ -38,6 +38,7 @@ import io.cran.trippy.utils.CircleImageView;
  */
 public class TourDescription extends Fragment {
 
+    public static final String TAG = TourDescription.class.getSimpleName();
     private TourDescriptionListener mListener;
     private String tourId;
     private ArrayList<ParseObject> selectedTour = new ArrayList<>();
@@ -72,6 +73,13 @@ public class TourDescription extends Fragment {
         // Inflate the layout for this fragment
         final View root = inflater.inflate(R.layout.fragment_tour_description, container, false);
 
+        ImageView tourLocation = (ImageView) root.findViewById(R.id.tourLocation);
+        tourLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.openMap();
+            }
+        });
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Tour");
         query.whereEqualTo("objectId", tourId);
         query.getFirstInBackground(new GetCallback<ParseObject>() {
@@ -109,6 +117,13 @@ public class TourDescription extends Fragment {
                                 Uri imageUri = Uri.parse(tourOwner.get(0).getParseFile("profilePic").getUrl());
                                 Picasso.with(root.getContext()).load(imageUri.toString()).into(profilePic);
 
+                                profilePic.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        mListener.showTourOwner(selectedTour.get(0).getString("ownerId"));
+                                    }
+                                });
+
                                 ImageView bookThisTourBtn = (ImageView) root.findViewById(R.id.bookTour);
                                 bookThisTourBtn.setOnClickListener(new View.OnClickListener() {
                                     @Override
@@ -137,6 +152,7 @@ public class TourDescription extends Fragment {
     public void onButtonPressed(Uri uri) {
 
     }
+
 
     @Override
     public void onAttach(Activity activity) {
@@ -174,5 +190,9 @@ public class TourDescription extends Fragment {
     public interface TourDescriptionListener {
         // TODO: Update argument type and name
         void sendEmail(String email, String tourName);
+
+        void openMap();
+
+        void showTourOwner(String ownerId);
     }
 }

@@ -68,18 +68,18 @@
         android:layout_alignTop="@+id/weather"
         android:src="@drawable/notifications" />
 
+
+
     <TextView
         android:id="@+id/tourDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@id/tourImage"
         android:paddingBottom="10sp"
         android:text="Tour Description"
-        android:textColor="#660e82" />
+        android:textColor="#660e82"
+        android:layout_below="@+id/tourImage"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 
 </RelativeLayout>

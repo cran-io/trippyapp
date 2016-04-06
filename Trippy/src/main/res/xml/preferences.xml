@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:key="pref_sorting_tours"
+        android:title="@string/sorting">
+
+        <ListPreference
+            android:defaultValue="-1"
+            android:entries="@array/pref_tourtype_list_titles"
+            android:entryValues="@array/pref_values_list_titles"
+            android:key="sortBy_list"
+            android:negativeButtonText="@null"
+            android:positiveButtonText="@null"
+            android:title="@string/pref_title_sortBy" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="pref_available_tours"
+        android:title="@string/available_preferences">
+
+        <ListPreference
+            android:defaultValue="-1"
+            android:entries="@array/pref_ranking_list_titles"
+            android:entryValues="@array/pref_values_list_titles"
+            android:key="ranking_list"
+            android:negativeButtonText="@null"
+            android:positiveButtonText="@null"
+            android:title="@string/pref_title_ranking" />
+
+        <ListPreference
+            android:defaultValue="-1"
+            android:entries="@array/pref_category_list_titles"
+            android:entryValues="@array/pref_values_list_titles"
+            android:key="category_list"
+            android:negativeButtonText="@null"
+            android:positiveButtonText="@null"
+            android:title="@string/pref_title_category" />
+
+        <ListPreference
+            android:defaultValue="-1"
+            android:entries="@array/pref_duration_list_titles"
+            android:entryValues="@array/pref_values_list_titles"
+            android:key="duration_list"
+            android:negativeButtonText="@null"
+            android:positiveButtonText="@null"
+            android:title="@string/pref_title_duration" />
+
+        <ListPreference
+            android:defaultValue="-1"
+            android:entries="@array/pref_location_list_titles"
+            android:entryValues="@array/pref_values_list_titles"
+            android:key="location_list"
+            android:negativeButtonText="@null"
+            android:positiveButtonText="@null"
+            android:title="@string/pref_title_location" />
+
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="weatherFriendly"
+            android:title="@string/pref_title_weatherFriendly" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

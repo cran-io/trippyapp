@@ -25,6 +25,7 @@ import bolts.AppLinks;
 import io.cran.trippy.R;
 import io.cran.trippy.fragments.FavouriteToursFragment;
 import io.cran.trippy.fragments.TourDescription;
+import io.cran.trippy.fragments.TourOwnerFragment;
 import io.cran.trippy.fragments.ToursFragment;
 import io.cran.trippy.utils.CircleImageView;
 
@@ -57,7 +58,7 @@ public class MainActivity extends AppCompatActivity
 
         if (intent.getExtras()!= null) {
             String name = getIntent().getStringExtra("User name");
-             email = getIntent().getStringExtra("User mail");
+            email = getIntent().getStringExtra("User mail");
             Uri imageUri= getIntent().getData();
             TextView username = (TextView) headerView.findViewById(R.id.userName);
             username.setText(name);
@@ -99,11 +100,19 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
+
+        int count = getFragmentManager().getBackStackEntryCount();
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            if (count == 0) {
+                super.onBackPressed();
+                //additional code
+            } else {
+                getFragmentManager().popBackStack();
+            }
         }
     }
 
@@ -119,7 +128,8 @@ public class MainActivity extends AppCompatActivity
             mFm = getFragmentManager();
             FragmentTransaction ft = mFm.beginTransaction();
             Fragment favToursFragment = FavouriteToursFragment.newInstance();
-            ft.replace(R.id.container, favToursFragment);
+            ft.replace(R.id.container, favToursFragment, FavouriteToursFragment.TAG);
+            ft.addToBackStack(FavouriteToursFragment.TAG);
             ft.commit();
 
         } else if (id == R.id.nav_friends) {
@@ -147,7 +157,8 @@ public class MainActivity extends AppCompatActivity
         mFm = getFragmentManager();
         FragmentTransaction ft = mFm.beginTransaction();
         Fragment tourDescription = TourDescription.newInstance(parseObject);
-        ft.replace(R.id.container, tourDescription);
+        ft.replace(R.id.container, tourDescription, TourDescription.TAG);
+        ft.addToBackStack(TourDescription.TAG);
         ft.commit();
     }
 
@@ -155,7 +166,7 @@ public class MainActivity extends AppCompatActivity
     public void sendEmail(String emailAddress, String tourName) {
         Intent i = new Intent(Intent.ACTION_SEND);
         i.setType("message/rfc822");
-        i.putExtra(android.content.Intent.EXTRA_EMAIL,new String[]{emailAddress});
+        i.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{emailAddress});
         i.putExtra(Intent.EXTRA_SUBJECT, "Book Tour: "+tourName+"");
         i.putExtra(Intent.EXTRA_TEXT   , "I would like to book the "+tourName+" for the day: (complete day), for (complete quantity of people) ");
         try {
@@ -163,5 +174,21 @@ public class MainActivity extends AppCompatActivity
         } catch (android.content.ActivityNotFoundException ex) {
             Toast.makeText(MainActivity.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void openMap() {
+        Intent i = new Intent(MainActivity.this, MapsActivity.class);
+        startActivity(i);
+    }
+
+    @Override
+    public void showTourOwner(String ownerId) {
+        mFm = getFragmentManager();
+        FragmentTransaction ft = mFm.beginTransaction();
+        Fragment tourOwner = TourOwnerFragment.newInstance(ownerId);
+        ft.replace(R.id.container, tourOwner, TourOwnerFragment.TAG);
+        ft.addToBackStack(TourOwnerFragment.TAG);
+        ft.commit();
     }
 }

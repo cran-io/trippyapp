@@ -13,19 +13,25 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseRelation;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.squareup.picasso.Picasso;
 
+import java.util.AbstractSequentialList;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import io.cran.trippy.R;
 import io.cran.trippy.activities.MainActivity;
 import io.cran.trippy.utils.AppPreferences;
+import io.cran.trippy.utils.CircleImageView;
 
 /**
  * Created by MariaSol on 16/03/2016.
@@ -41,6 +47,8 @@ public class TourAdapter extends BaseAdapter {
     private ParseUser mCurrentUser;
     private final LayoutInflater mInflater;
     private boolean isChecked=false;
+    private ArrayList<ParseObject> tourOwner = new ArrayList<>();
+    private CircleImageView profilePic;
 
     public TourAdapter(Context context, Application application, ArrayList toursList) {
         mContext = context;
@@ -88,11 +96,51 @@ public class TourAdapter extends BaseAdapter {
         viewHolder.description= (TextView) convertView.findViewById(R.id.tourDescription);
         viewHolder.description.setText(mTourList.get(position).getString("description"));
 
+       /** profilePic = (CircleImageView) convertView.findViewById(R.id.profilePicture);
+        Picasso.with(mContext).load(mOwnersPic.get(position).toString()).into(profilePic);**/
+
 
         handleButtonClick(convertView, position);
 
         return convertView;
     }
+
+    private int choseTourWeather(String weather) {
+        switch (weather) {
+            case "rain":
+                return R.drawable.weather_sunny;
+            default:
+                return R.drawable.weather_sunny;
+        }
+
+    }
+
+    private int choseTourTransport(String transport){
+        switch (transport){
+            case "bike":
+                return R.drawable.transport_bicycle;
+            case "walk":
+                return R.drawable.transport_walking2;
+            case "helicopter":
+                return R.drawable.transport_walking;
+            default:
+                return R.drawable.transport_walking;
+        }
+    }
+
+    private int choseTourType(String type){
+        switch (type){
+            case "sightseeing":
+                return R.drawable.type_sightseeing;
+            case "nightlife":
+                return R.drawable.type_drinks;
+
+            default:
+                return R.drawable.type_sightseeing;
+        }
+    }
+
+
 
     private void handleButtonClick(final View rowView, final int pos)
     {

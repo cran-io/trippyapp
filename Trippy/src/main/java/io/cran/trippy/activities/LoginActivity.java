@@ -93,6 +93,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                     i.putExtra("User name",name);
                                     i.putExtra("User mail", email);
                                     i.setData(imageUri);
+                                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                     startActivity(i);
 
                                 } catch (JSONException e) {

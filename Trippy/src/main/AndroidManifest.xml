@@ -34,11 +34,7 @@
             android:value="yTj8MYCHlxxCbzl3ZAczOl3Ynl6IE76Glag2tAb3" />
 
         <activity android:name=".activities.LoginActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <provider
@@ -55,7 +51,6 @@
         <activity
             android:name=".activities.MainActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -63,6 +58,11 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <!-- Accepts URIs "com.example.myapp://" -->
                 <data android:scheme="io.cran.trippy" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".activities.ShareWithFriends" />
@@ -78,6 +78,22 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
+        <activity
+            android:name=".activities.MapsActivity"
+            android:label="@string/title_activity_maps" />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <uses-library android:name="com.google.android.maps" />
+
+        <activity
+            android:name=".activities.SettingsActivity"
+            android:label="@string/title_activity_settings">
+
+
+        </activity>
     </application>
 
 </manifest>
