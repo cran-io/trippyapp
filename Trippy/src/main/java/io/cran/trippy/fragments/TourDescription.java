@@ -124,6 +124,14 @@ public class TourDescription extends Fragment {
                                     }
                                 });
 
+                                ImageView shareTour = (ImageView) root.findViewById (R.id.share);
+                                shareTour.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        mListener.shareTour(selectedTour.get(0).getString("name"));
+                                    }
+                                });
+
                                 ImageView bookThisTourBtn = (ImageView) root.findViewById(R.id.bookTour);
                                 bookThisTourBtn.setOnClickListener(new View.OnClickListener() {
                                     @Override
@@ -194,5 +202,8 @@ public class TourDescription extends Fragment {
         void openMap();
 
         void showTourOwner(String ownerId);
+
+
+        void shareTour(String name);
     }
 }

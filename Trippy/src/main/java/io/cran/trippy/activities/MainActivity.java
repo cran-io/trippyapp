@@ -4,6 +4,8 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
@@ -195,6 +197,33 @@ public class MainActivity extends AppCompatActivity
         ft.addToBackStack(TourOwnerFragment.TAG);
         ft.commit();
     }
+
+    @Override
+    public void shareTour(String name) {
+
+            PackageManager pm=getPackageManager();
+            try {
+
+                Intent waIntent = new Intent(Intent.ACTION_SEND);
+                waIntent.setType("text/plain");
+                String text = "Hey I'm going to the "+name+" ! Join me! Download Trippy to book the tour";
+
+                PackageInfo info=pm.getPackageInfo("com.whatsapp", PackageManager.GET_META_DATA);
+                //Check if package exists or not. If not then code
+                //in catch block will be called
+                waIntent.setPackage("com.whatsapp");
+
+                waIntent.putExtra(Intent.EXTRA_TEXT, text);
+                startActivity(Intent.createChooser(waIntent, "Share with"));
+
+            } catch (PackageManager.NameNotFoundException e) {
+                Toast.makeText(this, "WhatsApp not Installed", Toast.LENGTH_SHORT)
+                        .show();
+            }
+
+        }
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
