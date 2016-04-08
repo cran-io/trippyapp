@@ -1,13 +1,17 @@
 package io.cran.trippy.fragments;
 
 import android.app.Fragment;
+import android.app.ListActivity;
 import android.content.Context;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -47,6 +51,10 @@ public class FavouriteToursFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
     private ListView mTourList;
+    private ImageView mBrokenHeartImage;
+    private TextView mNoFavText;
+
+
 
     public FavouriteToursFragment() {
         // Required empty public constructor
@@ -72,6 +80,9 @@ public class FavouriteToursFragment extends Fragment {
         // Inflate the layout for this fragment
         View root =inflater.inflate(R.layout.fragment_favourite_tours, container, false);
         mTourList = (ListView) root.findViewById(R.id.favouriteTourList);
+        mBrokenHeartImage= (ImageView) root.findViewById(R.id.broken_heart);
+        mNoFavText= (TextView) root.findViewById(R.id.noFavToursText);
+
         return root;
     }
 
@@ -95,6 +106,7 @@ public class FavouriteToursFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
         mCurrentUser = ParseUser.getCurrentUser();
         mFavouritesToursRelation = mCurrentUser.getRelation("favourite_tours");
         mFavouritesToursRelation.getQuery().findInBackground(new FindCallback<ParseObject>() {
@@ -104,11 +116,22 @@ public class FavouriteToursFragment extends Fragment {
                     for (ParseObject tour : favouriteTours) {
                         mFavouriteTours.add(tour);
                     }
-                    TourAdapter tourAdapter = new TourAdapter(getActivity().getApplicationContext(), getActivity().getApplication(), mFavouriteTours);
+                    TourAdapter tourAdapter = new TourAdapter(getActivity().getApplicationContext(), getActivity().getApplication(), mFavouriteTours, mFavouriteTours);
                     mTourList.setAdapter(tourAdapter);
+                }
+
+                if(mFavouriteTours.isEmpty()){
+                    mBrokenHeartImage.setVisibility(View.VISIBLE);
+                    mNoFavText.setVisibility(View.VISIBLE);
+                    mTourList.setVisibility(View.GONE);
+                }else{
+                    mBrokenHeartImage.setVisibility(View.GONE);
+                    mNoFavText.setVisibility(View.GONE);
+                    mTourList.setVisibility(View.VISIBLE);
                 }
             }
         });
+
 
 
     }

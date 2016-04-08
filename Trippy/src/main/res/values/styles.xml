@@ -8,8 +8,13 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppBarOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="PreferenceScreen" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:textColor">#540e6c</item>
+        <item name="android:background">#e6e6e6</item>
+    </style>
 
 </resources>

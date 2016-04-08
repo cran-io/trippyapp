@@ -17,25 +17,9 @@
 
     <PreferenceCategory
         android:key="pref_available_tours"
-        android:title="@string/available_preferences">
+        android:title="@string/available_preferences"
+        >
 
-        <ListPreference
-            android:defaultValue="-1"
-            android:entries="@array/pref_ranking_list_titles"
-            android:entryValues="@array/pref_values_list_titles"
-            android:key="ranking_list"
-            android:negativeButtonText="@null"
-            android:positiveButtonText="@null"
-            android:title="@string/pref_title_ranking" />
-
-        <ListPreference
-            android:defaultValue="-1"
-            android:entries="@array/pref_category_list_titles"
-            android:entryValues="@array/pref_values_list_titles"
-            android:key="category_list"
-            android:negativeButtonText="@null"
-            android:positiveButtonText="@null"
-            android:title="@string/pref_title_category" />
 
         <ListPreference
             android:defaultValue="-1"

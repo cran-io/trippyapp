@@ -5,6 +5,10 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ListView;
 
 import io.cran.trippy.R;
 
@@ -12,7 +16,8 @@ import io.cran.trippy.R;
  * Created by MariaSol on 05/04/2016.
  */
 public class SettingsFragment extends PreferenceFragment{
-        /**
+    public static final String TAG = SettingsFragment.class.getSimpleName();
+    /**
          * A preference value change listener that updates the preference's summary
          * to reflect its new value.
          */
@@ -47,9 +52,17 @@ public class SettingsFragment extends PreferenceFragment{
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.preferences);
-
-
         }
+
+    
+    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = super.onCreateView(inflater, container, savedInstanceState);
+        if (view != null) {
+            view.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        }
+
+        return view; }
+
 
         /**
          * Binds a preference's summary to its value. More specifically, when the

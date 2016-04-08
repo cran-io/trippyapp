@@ -43,6 +43,7 @@ public class TourAdapter extends BaseAdapter {
     private final Context mContext;
     private final Application mApplication;
     private final ArrayList<ParseObject> mTourList;
+    private ArrayList<ParseObject> mFavouriteTours = new ArrayList<>();
     private ParseRelation<ParseObject> mTourFavourites;
     private ParseUser mCurrentUser;
     private final LayoutInflater mInflater;
@@ -50,13 +51,14 @@ public class TourAdapter extends BaseAdapter {
     private ArrayList<ParseObject> tourOwner = new ArrayList<>();
     private CircleImageView profilePic;
 
-    public TourAdapter(Context context, Application application, ArrayList toursList) {
+    public TourAdapter(Context context, Application application, ArrayList toursList, ArrayList favouriteTours) {
         mContext = context;
         mApplication = application;
         mTourList = toursList;
         mInflater = LayoutInflater.from(mContext);
         mCurrentUser = ParseUser.getCurrentUser();
         mTourFavourites = mCurrentUser.getRelation("favourite_tours");
+        mFavouriteTours = favouriteTours;
     }
 
     @Override
@@ -96,6 +98,14 @@ public class TourAdapter extends BaseAdapter {
         viewHolder.description= (TextView) convertView.findViewById(R.id.tourDescription);
         viewHolder.description.setText(mTourList.get(position).getString("description"));
 
+        viewHolder.favourite = (ImageView) convertView.findViewById(R.id.favourite);
+        isChecked = isAFavouriteTour(mTourList.get(position).getString("name"));
+        if (isChecked) {
+            viewHolder.favourite.setImageResource(R.drawable.favourite_tours);
+        } else {
+            viewHolder.favourite.setImageResource(R.drawable.favourite);
+        }
+
        /** profilePic = (CircleImageView) convertView.findViewById(R.id.profilePicture);
         Picasso.with(mContext).load(mOwnersPic.get(position).toString()).into(profilePic);**/
 
@@ -103,6 +113,16 @@ public class TourAdapter extends BaseAdapter {
         handleButtonClick(convertView, position);
 
         return convertView;
+    }
+
+    private boolean isAFavouriteTour(String objectId) {
+
+        for (int i = 0; i < mFavouriteTours.size(); i++) {
+            if (mFavouriteTours.get(i).get("name").equals(objectId)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private int choseTourWeather(String weather) {

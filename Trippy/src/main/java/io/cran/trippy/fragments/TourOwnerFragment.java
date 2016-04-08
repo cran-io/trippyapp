@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -116,7 +115,8 @@ public class TourOwnerFragment extends Fragment {
                         availableTours.add(tour);
 
 
-                        TourAdapter tourAdapter = new TourAdapter(getActivity().getApplicationContext(), getActivity().getApplication(), availableTours);
+                        ArrayList mFavouriteTours=new ArrayList();
+                        TourAdapter tourAdapter = new TourAdapter(getActivity().getApplicationContext(), getActivity().getApplication(), availableTours, mFavouriteTours);
                         mTourList.setAdapter(tourAdapter);
                   /**      mTourList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override

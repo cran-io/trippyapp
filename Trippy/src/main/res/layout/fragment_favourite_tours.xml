@@ -8,8 +8,28 @@
         android:id="@+id/favouriteTourList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="40sp" />
+        android:paddingTop="40sp"
+        android:visibility="gone" />
 
+    <ImageView
+        android:id="@+id/broken_heart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100sp"
+        android:src="@drawable/empty_state_favs"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/noFavToursText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/broken_heart"
+        android:layout_marginTop="20sp"
+        android:layout_centerHorizontal="true"
+        android:text="You hadn't marked any tour as favourite!"
+        android:textColor="#9b9b9b"
+        android:visibility="gone"/>
 
 </RelativeLayout>
 

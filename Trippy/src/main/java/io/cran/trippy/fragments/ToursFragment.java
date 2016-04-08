@@ -16,6 +16,8 @@ import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseRelation;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +50,7 @@ public class ToursFragment extends android.app.Fragment {
 
     private ToursFragmentListener mListener;
     private ArrayList<Uri> ownersPic = new ArrayList<>();
+    private ArrayList mFavouriteTours= new ArrayList();
 
     public ToursFragment() {
         // Required empty public constructor
@@ -104,9 +107,21 @@ public class ToursFragment extends android.app.Fragment {
                     for (ParseObject tour : tours) {
                         availableTours.add(tour);
 
+                        ParseUser mCurrentUser = ParseUser.getCurrentUser();
+                        ParseRelation<ParseObject> mFavouritesToursRelation = mCurrentUser.getRelation("favourite_tours");
+                        mFavouritesToursRelation.getQuery().findInBackground(new FindCallback<ParseObject>() {
+                            @Override
+                            public void done(List<ParseObject> favouriteTours, ParseException e) {
+                                if (e == null) {
+                                    for (ParseObject tour : favouriteTours) {
+                                        mFavouriteTours.add(tour);
+                                    }
+                                    TourAdapter tourAdapter = new TourAdapter(getActivity().getApplicationContext(), getActivity().getApplication(), availableTours,mFavouriteTours);
+                                    mTourList.setAdapter(tourAdapter);
+                                }
+                            }
+                        });
 
-                        TourAdapter tourAdapter = new TourAdapter(getActivity().getApplicationContext(), getActivity().getApplication(), availableTours);
-                        mTourList.setAdapter(tourAdapter);
                         mTourList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

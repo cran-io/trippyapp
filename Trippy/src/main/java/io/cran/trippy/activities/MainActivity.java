@@ -6,6 +6,7 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceFragment;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -13,6 +14,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -24,6 +26,8 @@ import com.squareup.picasso.Picasso;
 import bolts.AppLinks;
 import io.cran.trippy.R;
 import io.cran.trippy.fragments.FavouriteToursFragment;
+import io.cran.trippy.fragments.SettingsActivity;
+import io.cran.trippy.fragments.SettingsFragment;
 import io.cran.trippy.fragments.TourDescription;
 import io.cran.trippy.fragments.TourOwnerFragment;
 import io.cran.trippy.fragments.ToursFragment;
@@ -167,8 +171,8 @@ public class MainActivity extends AppCompatActivity
         Intent i = new Intent(Intent.ACTION_SEND);
         i.setType("message/rfc822");
         i.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{emailAddress});
-        i.putExtra(Intent.EXTRA_SUBJECT, "Book Tour: "+tourName+"");
-        i.putExtra(Intent.EXTRA_TEXT   , "I would like to book the "+tourName+" for the day: (complete day), for (complete quantity of people) ");
+        i.putExtra(Intent.EXTRA_SUBJECT, "Book Tour: " + tourName + "");
+        i.putExtra(Intent.EXTRA_TEXT, "I would like to book the " + tourName + " for the day: (complete day), for (complete quantity of people) ");
         try {
             startActivity(Intent.createChooser(i, "Send mail..."));
         } catch (android.content.ActivityNotFoundException ex) {
@@ -190,5 +194,26 @@ public class MainActivity extends AppCompatActivity
         ft.replace(R.id.container, tourOwner, TourOwnerFragment.TAG);
         ft.addToBackStack(TourOwnerFragment.TAG);
         ft.commit();
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_filter:
+               Intent i = new Intent(MainActivity.this, SettingsActivity.class);
+                startActivity(i);
+                return true;
+
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+
+        }
     }
 }

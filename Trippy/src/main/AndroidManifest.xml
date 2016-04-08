@@ -34,7 +34,11 @@
             android:value="yTj8MYCHlxxCbzl3ZAczOl3Ynl6IE76Glag2tAb3" />
 
         <activity android:name=".activities.LoginActivity">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
 
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
         </activity>
 
         <provider
@@ -59,11 +63,7 @@
                 <!-- Accepts URIs "com.example.myapp://" -->
                 <data android:scheme="io.cran.trippy" />
             </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".activities.ShareWithFriends" />
         <!--
@@ -89,9 +89,8 @@
         <uses-library android:name="com.google.android.maps" />
 
         <activity
-            android:name=".activities.SettingsActivity"
+            android:name=".fragments.SettingsActivity"
             android:label="@string/title_activity_settings">
-
 
         </activity>
     </application>
