@@ -121,14 +121,14 @@ public class ToursFragment extends android.app.Fragment {
                                 }
                             }
                         });
-
-                        mTourList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                mListener.showTourDescription(availableTours.get(position).getObjectId());
-                            }
-                        });
-
+                        if(mTourList!=null) {
+                            mTourList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                    mListener.showTourDescription(availableTours.get(position).getObjectId());
+                                }
+                            });
+                        }
                     }
                 } else {
                     Log.e("Parse Error", "" + e.getMessage());

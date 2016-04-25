@@ -8,7 +8,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceFragment;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -23,13 +22,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.appevents.AppEventsLogger;
+import com.parse.LogOutCallback;
+import com.parse.ParseException;
+import com.parse.ParseUser;
 import com.squareup.picasso.Picasso;
 
 import bolts.AppLinks;
 import io.cran.trippy.R;
 import io.cran.trippy.fragments.FavouriteToursFragment;
 import io.cran.trippy.fragments.SettingsActivity;
-import io.cran.trippy.fragments.SettingsFragment;
 import io.cran.trippy.fragments.TourDescription;
 import io.cran.trippy.fragments.TourOwnerFragment;
 import io.cran.trippy.fragments.ToursFragment;
@@ -151,6 +152,13 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_help) {
 
         } else if (id == R.id.nav_logout) {
+            ParseUser.logOutInBackground(new LogOutCallback() {
+                @Override
+                public void done(ParseException e) {
+                    Intent i = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(i);
+                }
+            });
 
         }
 

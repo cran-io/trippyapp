@@ -1,11 +1,13 @@
 package io.cran.trippy.activities;
 
 import android.content.Intent;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +26,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.parse.ParseException;
+import com.parse.ParseUser;
+import com.parse.SignUpCallback;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -89,13 +94,27 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
                                     imageUri= Uri.parse("http://graph.facebook.com/"+id+"/picture?type=large");
 
-                                    Intent i = new Intent(LoginActivity.this, MainActivity.class);
-                                    i.putExtra("User name",name);
-                                    i.putExtra("User mail", email);
-                                    i.setData(imageUri);
-                                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    startActivity(i);
+                                    ParseUser newUser= new ParseUser();
+                                    newUser.setUsername(name);
+                                    newUser.setEmail(email);
+                                    newUser.put("birthdate", birthday);
+                                    newUser.signUpInBackground(new SignUpCallback() {
+                                        @Override
+                                        public void done(ParseException e) {
+                                            if (e == null) {
+                                                Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                                                i.putExtra("User name", name);
+                                                i.putExtra("User mail", email);
+                                                i.setData(imageUri);
+                                                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                startActivity(i);
+                                            } else {
+                                                Toast.makeText(LoginActivity.this, "" + e.getMessage(), Toast.LENGTH_LONG).show();
+                                            }
+                                        }
+                                    });
+
 
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -127,13 +146,22 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             }
         });
 
+        ImageView signInBtn= (ImageView) findViewById(R.id.signInBtn);
+        assert signInBtn != null;
+        signInBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(LoginActivity.this, SignInActivity.class);
+                startActivity(i);
+            }
+        });
+
         TextView signUpLink = (TextView) findViewById(R.id.signUpLink);
         assert signUpLink != null;
         signUpLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(LoginActivity.this, SignUpActivity.class);
-
                 startActivity(i);
             }
         });
@@ -155,14 +183,28 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private void handleSignInResult(GoogleSignInResult result) {
         if (result.isSuccess()) {
             // Signed in successfully, show authenticated UI.
-            GoogleSignInAccount acct = result.getSignInAccount();
+            final GoogleSignInAccount acct = result.getSignInAccount();
 
-            Log.e("URL",""+acct.getPhotoUrl());
-            Intent i = new Intent(LoginActivity.this, MainActivity.class);
-            i.putExtra("User name",acct.getDisplayName());
-            i.putExtra("User mail",acct.getEmail());
-            i.setData(acct.getPhotoUrl());
-            startActivity(i);
+            Log.e("URL", "" + acct.getPhotoUrl());
+
+            ParseUser newUser= new ParseUser();
+            newUser.setUsername(acct.getDisplayName());
+            newUser.setEmail(acct.getEmail());
+            newUser.signUpInBackground(new SignUpCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e == null) {
+                        Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                        i.putExtra("User name", acct.getDisplayName());
+                        i.putExtra("User mail", acct.getEmail());
+                        i.setData(acct.getPhotoUrl());
+                        startActivity(i);
+                    } else {
+                        Toast.makeText(LoginActivity.this, "" + e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+
         } else {
             // Signed out, show unauthenticated UI.
         }

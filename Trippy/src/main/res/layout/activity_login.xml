@@ -22,23 +22,32 @@
         android:textSize="16sp"
         android:paddingTop="15dp"
         android:paddingBottom="15dp"
-        android:layout_marginBottom="10dp"
         android:layout_above="@+id/googleLogin"
-        android:layout_alignLeft="@+id/imageView"
-        android:layout_alignStart="@+id/imageView"
-        android:layout_alignRight="@+id/imageView"
-        android:layout_alignEnd="@+id/imageView" />
+        android:layout_alignLeft="@+id/googleLogin"
+        android:layout_alignStart="@+id/googleLogin"
+        android:layout_alignRight="@+id/googleLogin"
+        android:layout_alignEnd="@+id/googleLogin" />
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/googleLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="50dp"
-        android:layout_alignLeft="@+id/facebookLogin"
-        android:layout_alignStart="@+id/facebookLogin"
-        android:layout_alignRight="@+id/facebookLogin"
-        android:layout_alignEnd="@+id/facebookLogin" />
+        android:layout_above="@+id/signInBtn"
+        android:layout_alignRight="@+id/imageView"
+        android:layout_alignEnd="@+id/imageView"
+        android:layout_alignLeft="@+id/signInBtn"
+        android:layout_alignStart="@+id/signInBtn" />
+
+    <ImageView
+        android:layout_width="300sp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/sign_in_btn"
+        android:id="@+id/signInBtn"
+        android:layout_above="@+id/signUpLink"
+        android:layout_alignLeft="@+id/imageView"
+        android:layout_alignStart="@+id/imageView"
+        android:layout_alignRight="@+id/imageView"
+        android:layout_alignEnd="@+id/imageView" />
 
     <TextView
         android:id="@+id/signUpLink"
@@ -49,6 +58,8 @@
         android:layout_marginBottom="15dp"
         android:text="@string/sign_up"
         android:textColor="#660e82" />
+
+
 
 
 </RelativeLayout>

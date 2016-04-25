@@ -1,6 +1,7 @@
 package io.cran.trippy.activities;
 
 import android.content.Intent;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -15,6 +16,7 @@ import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
 import io.cran.trippy.R;
+import io.cran.trippy.fragments.DatePickerFragment;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -34,6 +36,13 @@ public class SignUpActivity extends AppCompatActivity {
         mLastName=(EditText) findViewById(R.id.lastNameET);
         mEmailAddress=(EditText) findViewById(R.id.emailAddressET);
         mBirthDate=(EditText) findViewById(R.id.birthDate);
+        mBirthDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    DialogFragment newFragment = new DatePickerFragment();
+                    newFragment.show(getSupportFragmentManager(), "datePicker");
+            }
+        });
         mPassword=(EditText)findViewById(R.id.password);
         mSignUpBtn= (ImageView) findViewById(R.id.signUpBtn);
 
