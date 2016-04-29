@@ -12,7 +12,7 @@
     android:src="@drawable/trippy_login"
     android:layout_centerHorizontal="true"
     android:layout_marginTop="75dp"
-    android:id="@+id/imageView" />
+    android:id="@+id/trippyLogo" />
 
     
     <com.facebook.login.widget.LoginButton
@@ -22,21 +22,24 @@
         android:textSize="16sp"
         android:paddingTop="15dp"
         android:paddingBottom="15dp"
+        android:layout_marginBottom="3sp"
+        android:layout_alignEnd="@+id/trippyLogo"
+        android:layout_alignLeft="@+id/trippyLogo"
         android:layout_above="@+id/googleLogin"
-        android:layout_alignLeft="@+id/googleLogin"
-        android:layout_alignStart="@+id/googleLogin"
-        android:layout_alignRight="@+id/googleLogin"
-        android:layout_alignEnd="@+id/googleLogin" />
+        android:layout_alignRight="@+id/trippyLogo"
+        android:layout_alignStart="@+id/trippyLogo"
+        android:layout_marginLeft="3sp"
+        android:layout_marginRight="3sp" />
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/googleLogin"
-        android:layout_width="wrap_content"
+        android:layout_width="150sp"
         android:layout_height="wrap_content"
         android:layout_above="@+id/signInBtn"
-        android:layout_alignRight="@+id/imageView"
-        android:layout_alignEnd="@+id/imageView"
-        android:layout_alignLeft="@+id/signInBtn"
-        android:layout_alignStart="@+id/signInBtn" />
+        android:layout_alignEnd="@+id/trippyLogo"
+        android:layout_alignLeft="@+id/trippyLogo"
+        android:layout_alignRight="@+id/trippyLogo"
+        android:layout_alignStart="@+id/trippyLogo" />
 
     <ImageView
         android:layout_width="300sp"
@@ -44,10 +47,12 @@
         android:src="@drawable/sign_in_btn"
         android:id="@+id/signInBtn"
         android:layout_above="@+id/signUpLink"
-        android:layout_alignLeft="@+id/imageView"
-        android:layout_alignStart="@+id/imageView"
-        android:layout_alignRight="@+id/imageView"
-        android:layout_alignEnd="@+id/imageView" />
+        android:layout_alignEnd="@+id/trippyLogo"
+        android:layout_alignLeft="@+id/trippyLogo"
+        android:layout_alignRight="@+id/trippyLogo"
+        android:layout_alignStart="@+id/trippyLogo"
+        android:layout_marginLeft="3sp"
+        android:layout_marginRight="3sp" />
 
     <TextView
         android:id="@+id/signUpLink"

@@ -117,6 +117,7 @@ public class ToursFragment extends android.app.Fragment {
                                         mFavouriteTours.add(tour);
                                     }
                                     TourAdapter tourAdapter = new TourAdapter(getActivity().getApplicationContext(), getActivity().getApplication(), availableTours,mFavouriteTours);
+                                    assert mTourList!=null;
                                     mTourList.setAdapter(tourAdapter);
                                 }
                             }

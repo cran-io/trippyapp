@@ -88,6 +88,14 @@ public class TourAdapter extends BaseAdapter {
             viewHolder = (MyViewHolder) convertView.getTag();
         }
 
+        viewHolder.transport= (ImageView) convertView.findViewById(R.id.transport);
+        viewHolder.type= (ImageView) convertView.findViewById(R.id.type);
+        viewHolder.weather = (ImageView) convertView.findViewById(R.id.weather);
+
+        viewHolder.transport.setImageResource(choseTourTransport(mTourList.get(position).getString("transport")));
+        viewHolder.type.setImageResource(choseTourType(mTourList.get(position).getString("type")));
+        viewHolder.weather.setImageResource(choseTourWeather(mTourList.get(position).getString("weather")));
+
         viewHolder.tourName = (TextView) convertView.findViewById(R.id.tourName);
         viewHolder.tourName.setText(mTourList.get(position).getString("name"));
 
@@ -128,7 +136,7 @@ public class TourAdapter extends BaseAdapter {
     private int choseTourWeather(String weather) {
         switch (weather) {
             case "rain":
-                return R.drawable.weather_sunny;
+                return R.drawable.lluvia;
             default:
                 return R.drawable.weather_sunny;
         }
@@ -154,6 +162,14 @@ public class TourAdapter extends BaseAdapter {
                 return R.drawable.type_sightseeing;
             case "nightlife":
                 return R.drawable.type_drinks;
+            case "museum":
+                return R.drawable.museum;
+            case "art":
+                return R.drawable.arte;
+            case "translator":
+                return R.drawable.translator;
+            case "music":
+                return R.drawable.music;
 
             default:
                 return R.drawable.type_sightseeing;

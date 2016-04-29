@@ -95,7 +95,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                     imageUri= Uri.parse("http://graph.facebook.com/"+id+"/picture?type=large");
 
                                     ParseUser newUser= new ParseUser();
-                                    newUser.setUsername(name);
+                                    newUser.setUsername(email);
                                     newUser.setEmail(email);
                                     newUser.put("birthdate", birthday);
                                     newUser.signUpInBackground(new SignUpCallback() {
@@ -105,6 +105,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                                 Intent i = new Intent(LoginActivity.this, MainActivity.class);
                                                 i.putExtra("User name", name);
                                                 i.putExtra("User mail", email);
+                                                i.putExtra("Password", "solrubado");
                                                 i.setData(imageUri);
                                                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -188,7 +189,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             Log.e("URL", "" + acct.getPhotoUrl());
 
             ParseUser newUser= new ParseUser();
-            newUser.setUsername(acct.getDisplayName());
+            newUser.setUsername(acct.getEmail());
+            newUser.setPassword("solrubado");
             newUser.setEmail(acct.getEmail());
             newUser.signUpInBackground(new SignUpCallback() {
                 @Override
@@ -196,6 +198,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     if (e == null) {
                         Intent i = new Intent(LoginActivity.this, MainActivity.class);
                         i.putExtra("User name", acct.getDisplayName());
+                        i.putExtra("Password", "solrubado");
                         i.putExtra("User mail", acct.getEmail());
                         i.setData(acct.getPhotoUrl());
                         startActivity(i);

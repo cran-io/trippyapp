@@ -24,75 +24,116 @@
         android:layout_marginTop="10sp"
         android:src="@drawable/background_data" />
 
+
     <EditText
-        android:layout_marginTop="15sp"
         android:id="@+id/firstNameET"
         android:layout_width="wrap_content"
         android:layout_height="30sp"
         android:outlineProvider="background"
-        android:layout_alignEnd="@+id/signUpBtn"
         android:elegantTextHeight="false"
         android:background="#ffffff"
         android:inputType="textCapWords"
         android:hint="First Name"
-        android:layout_below="@+id/trippyHeader"
         android:fontFamily="sans-serif-light"
         android:textAllCaps="false"
-        android:layout_alignLeft="@+id/confirmPassword"
-        android:layout_alignStart="@+id/confirmPassword"
-        android:layout_alignRight="@+id/signUpBtn"
         android:gravity="fill_vertical"
-        android:paddingLeft="8sp"
+        android:layout_alignEnd="@+id/divider1"
+        android:layout_alignLeft="@+id/dataBackground"
+        android:layout_alignRight="@+id/divider1"
+        android:layout_alignStart="@+id/dataBackground"
+        android:layout_alignTop="@+id/dataBackground"
+        android:layout_marginTop="12sp"
+        android:paddingLeft="17sp"
         android:textColor="#9f9f9f" />
+
+    <ImageView
+        android:id="@+id/divider1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/firstNameET"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/text_divider"
+        />
+
 
     <EditText
         android:id="@+id/lastNameET"
         android:layout_width="wrap_content"
         android:inputType="textCapWords"
         android:layout_height="30sp"
-        android:layout_marginTop="10sp"
-        android:layout_alignEnd="@+id/firstNameET"
-        android:layout_alignLeft="@+id/firstNameET"
-        android:layout_alignRight="@+id/firstNameET"
-        android:layout_alignStart="@+id/firstNameET"
         android:fontFamily="sans-serif-light"
-        android:paddingLeft="8sp"
+        android:layout_alignEnd="@+id/divider1"
+        android:layout_alignLeft="@+id/dataBackground"
         android:textColor="#9f9f9f"
-        android:layout_below="@+id/firstNameET"
+        android:layout_alignRight="@+id/divider1"
         android:background="#ffffff"
-        android:hint="Last Name" />
+        android:layout_alignStart="@+id/dataBackground"
+        android:layout_below="@+id/divider1"
+        android:layout_marginTop="3sp"
+        android:hint="Last Name"
+        android:paddingLeft="17sp"
+        />
+
+    <ImageView
+        android:id="@+id/divider2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lastNameET"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/text_divider"
+         />
 
     <EditText
         android:id="@+id/emailAddressET"
         android:layout_width="wrap_content"
-        android:layout_marginTop="10sp"
+        android:layout_alignEnd="@+id/divider2"
         android:layout_height="30sp"
         android:background="#ffffff"
         android:hint="Email Address"
+        android:layout_alignRight="@+id/divider2"
         android:fontFamily="sans-serif-light"
-        android:paddingLeft="8sp"
-        android:layout_below="@+id/lastNameET"
+        android:layout_below="@+id/divider2"
+        android:layout_marginTop="3sp"
         android:textColor="#9f9f9f"
         android:inputType="textEmailAddress"
         android:layout_alignLeft="@+id/lastNameET"
         android:layout_alignStart="@+id/lastNameET"
-        android:layout_alignRight="@+id/lastNameET"
-        android:layout_alignEnd="@+id/lastNameET" />
+        android:paddingLeft="17sp" />
 
-    <EditText
+    <ImageView
+        android:id="@+id/divider3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/emailAddressET"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/text_divider" />
+
+    <TextView
         android:id="@+id/birthDate"
         android:layout_width="wrap_content"
         android:layout_height="30sp"
         android:inputType="date"
-        android:layout_alignLeft="@+id/dataBackground"
+        android:layout_alignEnd="@+id/divider3"
         android:background="#ffffff"
-        android:layout_alignStart="@+id/dataBackground"
-        android:layout_below="@+id/emailAddressET"
-        android:layout_marginTop="10sp"
         android:fontFamily="sans-serif-light"
-        android:hint="Birth Date DD/MM/YYYY"
-        android:paddingLeft="8sp"
-        android:textColor="#9f9f9f" />
+        android:layout_alignLeft="@+id/dataBackground"
+        android:layout_alignRight="@+id/divider3"
+        android:layout_alignStart="@+id/dataBackground"
+        android:layout_below="@+id/divider3"
+        android:layout_marginTop="3sp"
+        android:paddingLeft="17sp"
+        android:paddingTop="3sp"
+        android:text="Birthday"
+        android:textColor="#9f9f9f"
+        android:textSize="18sp" />
+
+    <ImageView
+        android:id="@+id/divider4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/birthDate"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/text_divider" />
 
     <EditText
         android:id="@+id/password"
@@ -100,17 +141,26 @@
         android:layout_height="30sp"
         android:background="#ffffff"
         android:hint="Password"
-        android:layout_alignEnd="@+id/dataBackground"
+        android:layout_alignEnd="@+id/divider4"
         android:layout_alignLeft="@+id/dataBackground"
-        android:layout_alignRight="@+id/dataBackground"
-        android:layout_alignStart="@+id/dataBackground"
-        android:layout_below="@id/birthDate"
         android:layout_centerVertical="true"
-        android:layout_marginTop="10sp"
+        android:layout_alignRight="@+id/divider4"
         android:fontFamily="sans-serif-light"
         android:inputType="textPassword"
-        android:paddingLeft="8sp"
+        android:layout_alignStart="@+id/dataBackground"
+        android:layout_below="@id/divider4"
+        android:layout_marginTop="3sp"
+        android:paddingLeft="17sp"
         android:textColor="#9f9f9f" />
+
+
+    <ImageView
+        android:id="@+id/divider5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/password"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/text_divider" />
 
     <EditText
         android:id="@+id/confirmPassword"
@@ -118,16 +168,47 @@
         android:layout_height="30sp"
         android:background="#ffffff"
         android:hint="Confirm Password"
-        android:layout_alignEnd="@+id/dataBackground"
+        android:layout_alignEnd="@+id/divider6"
+        android:layout_alignRight="@+id/divider6"
         android:layout_alignLeft="@+id/dataBackground"
-        android:layout_alignRight="@+id/dataBackground"
-        android:layout_below="@+id/password"
-        android:layout_alignStart="@+id/dataBackground"
-        android:layout_marginTop="10sp"
         android:fontFamily="sans-serif-light"
-        android:paddingLeft="8sp"
+        android:layout_alignStart="@+id/dataBackground"
         android:inputType="textPassword"
+        android:layout_below="@+id/divider5"
+        android:layout_marginTop="3sp"
+        android:paddingLeft="17sp"
         android:textColor="#9f9f9f" />
+
+
+    <ImageView
+        android:id="@+id/divider6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/confirmPassword"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/text_divider" />
+
+    <ImageView
+        android:id="@+id/allset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/dataBackground"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="56dp"
+        android:visibility="gone"
+        android:src="@drawable/tilde3" />
+
+    <TextView
+        android:id="@+id/allsetText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/allset"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:text="All set!"
+        android:visibility="gone"
+        android:textColor="#660e82"
+        android:textSize="23sp" />
 
     <ImageView
         android:id="@+id/signUpBtn"
