@@ -2,7 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     >
 
-    <group android:checkableBehavior="single">
+    <group android:checkableBehavior="single"
+        android:id="@+id/menu_user">
         <item
             android:id="@+id/nav_tours"
             android:icon="@drawable/favourite_tours"
@@ -19,7 +20,9 @@
 
     </group>
 
-    <group android:checkableBehavior="single">
+
+    <group android:checkableBehavior="single"
+        android:id="@+id/menu_trippy">
         <item
             android:id="@+id/nav_about"
             android:icon="@drawable/about"
@@ -35,9 +38,14 @@
 
     </group>
 
- <item
-     android:id="@+id/nav_logout"
-     android:icon="@drawable/logout"
-     android:title="@string/logout"/>
+    <group android:checkableBehavior="single"
+        android:id="@+id/menu_logout">
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/logout"
+            android:title="@string/logout"/>
+
+    </group>
+
 
 </menu>

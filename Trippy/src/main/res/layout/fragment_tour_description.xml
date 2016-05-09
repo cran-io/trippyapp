@@ -113,14 +113,14 @@
                 android:background="#dfcde5">
 
                 <io.cran.trippy.utils.CircleImageView
-                    android:id="@+id/profilePic"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:layout_alignTop="@+id/tourOwner"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_toLeftOf="@+id/tourOwner"
-                    android:layout_toStartOf="@+id/tourOwner"
-                    android:paddingTop="35sp" />
+                android:id="@+id/profileDescriptionPic"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_alignTop="@+id/tourOwner"
+                android:layout_gravity="center_horizontal"
+                android:layout_toLeftOf="@+id/tourOwner"
+                android:layout_toStartOf="@+id/tourOwner"
+                android:paddingTop="35sp" />
 
                 <TextView
                     android:id="@+id/tourOwner"
@@ -139,7 +139,7 @@
                     android:layout_below="@id/tourOwner"
                     android:layout_centerHorizontal="true"
                     android:layout_marginLeft="20sp"
-                    android:layout_toRightOf="@id/profilePic"
+                    android:layout_toRightOf="@id/profileDescriptionPic"
                     android:layout_marginTop="5sp"
                     android:text="Tour Quantity" />
 
@@ -151,7 +151,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginLeft="20sp"
                     android:layout_marginBottom="20sp"
-                    android:layout_toRightOf="@id/profilePic"
+                    android:layout_toRightOf="@id/profileDescriptionPic"
                     android:layout_marginTop="5sp"
                     android:text="See all tours from this agency"
                     android:textColor="#72218c" />

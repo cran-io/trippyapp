@@ -41,13 +41,12 @@ public class TourOwnerFragment extends Fragment {
 
     // TODO: Rename and change types of parameters
     private String mOwnerId;
-    private String mParam2;
 
     private OnFragmentInteractionListener mListener;
     private TextView mTourOwnerName;
     private TextView mTourOwnerMail;
     private CircleImageView mProfilePic;
-    private ArrayList availableTours= new ArrayList();
+    private ArrayList<ParseObject> availableTours= new ArrayList<ParseObject>();
     private ListView mTourList;
 
     public TourOwnerFragment() {
@@ -78,7 +77,7 @@ public class TourOwnerFragment extends Fragment {
 
         mTourOwnerName = (TextView) root.findViewById(R.id.tourOwner);
         mTourOwnerMail= (TextView) root.findViewById(R.id.tourOwnerMail);
-        mProfilePic = (CircleImageView) root.findViewById(R.id.profilePic);
+        mProfilePic = (CircleImageView) root.findViewById(R.id.profileOwnerPic);
         mTourList= (ListView) root.findViewById(R.id.tourOwnerList);
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("TourOwner");
@@ -106,7 +105,7 @@ public class TourOwnerFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        ParseQuery query = new ParseQuery("Tour");
+        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("Tour");
         query.whereEqualTo("ownerId",mOwnerId);
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> tours, ParseException e) {
@@ -116,7 +115,7 @@ public class TourOwnerFragment extends Fragment {
 
 
                         ArrayList mFavouriteTours=new ArrayList();
-                        TourAdapter tourAdapter = new TourAdapter(getActivity().getApplicationContext(), getActivity().getApplication(), availableTours, mFavouriteTours);
+                        TourAdapter tourAdapter = new TourAdapter(getActivity().getApplicationContext(), getActivity().getApplication(), availableTours, mFavouriteTours, null);
                         mTourList.setAdapter(tourAdapter);
                   /**      mTourList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override

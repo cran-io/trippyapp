@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseRelation;
@@ -43,15 +44,15 @@ public class TourAdapter extends BaseAdapter {
     private final Context mContext;
     private final Application mApplication;
     private final ArrayList<ParseObject> mTourList;
+    private ArrayList<Uri> mTourOwnersPic = new ArrayList<Uri>();
     private ArrayList<ParseObject> mFavouriteTours = new ArrayList<>();
     private ParseRelation<ParseObject> mTourFavourites;
     private ParseUser mCurrentUser;
     private final LayoutInflater mInflater;
     private boolean isChecked=false;
-    private ArrayList<ParseObject> tourOwner = new ArrayList<>();
     private CircleImageView profilePic;
 
-    public TourAdapter(Context context, Application application, ArrayList toursList, ArrayList favouriteTours) {
+    public TourAdapter(Context context, Application application, ArrayList toursList, ArrayList favouriteTours, ArrayList<Uri> tourOwnersPic) {
         mContext = context;
         mApplication = application;
         mTourList = toursList;
@@ -59,6 +60,7 @@ public class TourAdapter extends BaseAdapter {
         mCurrentUser = ParseUser.getCurrentUser();
         mTourFavourites = mCurrentUser.getRelation("favourite_tours");
         mFavouriteTours = favouriteTours;
+        mTourOwnersPic = tourOwnersPic;
     }
 
     @Override
@@ -109,14 +111,19 @@ public class TourAdapter extends BaseAdapter {
         viewHolder.favourite = (ImageView) convertView.findViewById(R.id.favourite);
         isChecked = isAFavouriteTour(mTourList.get(position).getString("name"));
         if (isChecked) {
-            viewHolder.favourite.setImageResource(R.drawable.favourite_tours);
+            viewHolder.favourite.setImageResource(R.drawable.heart_selected);
         } else {
             viewHolder.favourite.setImageResource(R.drawable.favourite);
         }
 
-       /** profilePic = (CircleImageView) convertView.findViewById(R.id.profilePicture);
-        Picasso.with(mContext).load(mOwnersPic.get(position).toString()).into(profilePic);**/
-
+        profilePic = (CircleImageView) convertView.findViewById(R.id.ownerMainPic);
+        if(mTourOwnersPic!=null) {
+            if (position<mTourOwnersPic.size()&&mTourOwnersPic.get(position) != null) {
+                Picasso.with(mContext).load(mTourOwnersPic.get(position).toString()).into(profilePic);
+            }
+        }else {
+            profilePic.setVisibility(View.INVISIBLE);
+        }
 
         handleButtonClick(convertView, position);
 
@@ -145,7 +152,7 @@ public class TourAdapter extends BaseAdapter {
 
     private int choseTourTransport(String transport){
         switch (transport){
-            case "bike":
+            case "bicycle":
                 return R.drawable.transport_bicycle;
             case "walk":
                 return R.drawable.transport_walking2;
@@ -188,7 +195,7 @@ public class TourAdapter extends BaseAdapter {
                 ParseObject tourSelected = getItem(pos);
 
                 if (!isChecked) {
-                    favourite.setImageResource(R.drawable.favourite_tours);
+                    favourite.setImageResource(R.drawable.heart_selected);
                     mTourFavourites.add(tourSelected);
                     mCurrentUser.saveInBackground(new SaveCallback() {
                         @Override
@@ -228,5 +235,6 @@ public class TourAdapter extends BaseAdapter {
         ImageView transport;
         ImageView weather;
         ImageView type;
+        ImageView tourOwner;
     }
 }

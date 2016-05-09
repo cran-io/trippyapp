@@ -23,6 +23,7 @@ import com.parse.SignUpCallback;
 
 import io.cran.trippy.R;
 import io.cran.trippy.fragments.DatePickerFragment;
+import io.cran.trippy.utils.AppPreferences;
 
 public class SignUpActivity extends AppCompatActivity implements DatePickerFragment.DatePickerListener {
 
@@ -58,9 +59,9 @@ public class SignUpActivity extends AppCompatActivity implements DatePickerFragm
         mSignUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String firstName= mFirstName.getText().toString().trim();
-                String lastName= mLastName.getText().toString().trim();
-                String emailAddress= mEmailAddress.getText().toString().trim();
+                final String firstName = mFirstName.getText().toString().trim();
+                final String lastName = mLastName.getText().toString().trim();
+                final String emailAddress = mEmailAddress.getText().toString().trim();
                 String birthDate= mBirthDate.getText().toString().trim();
                 String password= mPassword.getText().toString().trim();
                 String repeatPass = mRepeatPass.getText().toString().trim();
@@ -68,16 +69,20 @@ public class SignUpActivity extends AppCompatActivity implements DatePickerFragm
                 if (password.equals(repeatPass)) {
                 ParseUser newUser= new ParseUser();
                     newUser.setUsername(emailAddress);
-                newUser.put("lastname",lastName);
-                newUser.setEmail(emailAddress);
-                newUser.put("birthdate",birthDate);
-                newUser.setPassword(password);
-                newUser.signUpInBackground(new SignUpCallback() {
+                    newUser.put("firstname",firstName);
+                    newUser.put("lastname",lastName);
+                    newUser.setEmail(emailAddress);
+                    newUser.put("birthdate",birthDate);
+                    newUser.setPassword(password);
+                    newUser.signUpInBackground(new SignUpCallback() {
                     @Override
                     public void done(ParseException e) {
                         if(e==null){
 
                             makeAssetsInvisible();
+                            AppPreferences.instance(getApplication()).saveUsername(firstName + " " + lastName);
+                            AppPreferences.instance(getApplication()).saveUserMail(emailAddress);
+                            AppPreferences.instance(getApplication()).saveUserImage("");
                             TextView allsetText = (TextView) findViewById(R.id.allsetText);
                             assert allsetText != null;
                             allsetText.setVisibility(View.VISIBLE);

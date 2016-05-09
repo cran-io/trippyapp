@@ -5,6 +5,11 @@
                 <item name="colorPrimary">#540e6c</item>
                 <item name="colorPrimaryDark">#540e6c</item>
                 <item name="colorAccent">#540e6c</item>
+                <item name="android:textColorTertiary">#ffff</item>
+                <item name="android:colorControlNormal">#ffff</item>
+                <item name="android:colorControlActivated">#ffff</item>
+                <item name="android:colorActivatedHighlight">#ffff</item>
+                <item name="android:textColorSecondary">#9b9999</item>
                 <item name="android:datePickerDialogTheme">@style/Dialog.Theme</item>
                 <item name="android:timePickerDialogTheme">@style/Dialog.Theme</item>
         </style>

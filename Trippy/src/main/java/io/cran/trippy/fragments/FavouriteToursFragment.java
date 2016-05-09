@@ -1,9 +1,7 @@
 package io.cran.trippy.fragments;
 
 import android.app.Fragment;
-import android.app.ListActivity;
 import android.content.Context;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -114,9 +112,11 @@ public class FavouriteToursFragment extends Fragment {
             public void done(List<ParseObject> favouriteTours, ParseException e) {
                 if (e == null) {
                     for (ParseObject tour : favouriteTours) {
-                        mFavouriteTours.add(tour);
+                        if (!mFavouriteTours.contains(tour)) {
+                            mFavouriteTours.add(tour);
+                        }
                     }
-                    TourAdapter tourAdapter = new TourAdapter(getActivity().getApplicationContext(), getActivity().getApplication(), mFavouriteTours, mFavouriteTours);
+                    TourAdapter tourAdapter = new TourAdapter(getActivity().getApplicationContext(), getActivity().getApplication(), mFavouriteTours, mFavouriteTours, null);
                     mTourList.setAdapter(tourAdapter);
                 }
 

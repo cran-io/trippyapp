@@ -2,8 +2,6 @@ package io.cran.trippy.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.Context;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,18 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-import com.parse.ParseUser;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import io.cran.trippy.R;
 import io.cran.trippy.utils.CircleImageView;
@@ -113,7 +107,7 @@ public class TourDescription extends Fragment {
                                 TextView cantTours = (TextView) root.findViewById(R.id.tourCant);
                                 cantTours.setText("" + tourOwner.get(0).getInt("tourQuantity") + " enrolled tours");
 
-                                CircleImageView profilePic = (CircleImageView) root.findViewById(R.id.profilePic);
+                                CircleImageView profilePic = (CircleImageView) root.findViewById(R.id.profileDescriptionPic);
                                 Uri imageUri = Uri.parse(tourOwner.get(0).getParseFile("profilePic").getUrl());
                                 Picasso.with(root.getContext()).load(imageUri.toString()).into(profilePic);
 

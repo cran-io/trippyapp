@@ -67,11 +67,19 @@
         <item>All tours</item>
     </string-array>
 
-    <string-array name="pref_values_list_titles">
-        <item>-1</item>
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
+    <string-array name="pref_values_location_titles">
+        <item>La Boca</item>
+        <item>Puerto Madero</item>
+        <item>San Telmo</item>
+        <item>Palermo</item>
+        <item>All</item>
+    </string-array>
+
+    <string-array name="pref_values_duration_titles">
+        <item>1 hour</item>
+        <item>Less than 3 hours</item>
+        <item>Half day</item>
+        <item>All day</item>
     </string-array>
 
     <string-array name="pref_duration_list_titles">

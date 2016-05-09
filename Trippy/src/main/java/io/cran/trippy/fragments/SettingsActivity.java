@@ -1,6 +1,7 @@
 package io.cran.trippy.fragments;
 
 
+import android.app.Application;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.ListPreference;
@@ -11,36 +12,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import io.cran.trippy.R;
-
+import io.cran.trippy.utils.AppPreferences;
 
 
 public class SettingsActivity extends AppCompatPreferenceActivity {
 
-    private static Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener = new Preference.OnPreferenceChangeListener() {
-        @Override
-        public boolean onPreferenceChange(Preference preference, Object value) {
-            String stringValue = value.toString();
 
-            if (preference instanceof ListPreference) {
-                // For list preferences, look up the correct display value in
-                // the preference's 'entries' list.
-                ListPreference listPreference = (ListPreference) preference;
-                int index = listPreference.findIndexOfValue(stringValue);
-
-                // Set the summary to reflect the new value.
-                preference.setSummary(
-                        index >= 0
-                                ? listPreference.getEntries()[index]
-                                : null);
-
-            } else {
-                // For all other preferences, set the summary to the value's
-                // simple string representation.
-                preference.setSummary(stringValue);
-            }
-            return true;
-        }
-    };
+    private static Application mApp;
 
 
     private static void bindPreferenceSummaryToValue(Preference preference) {
@@ -60,13 +38,17 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         super.onCreate(savedInstanceState);
         setupActionBar();
         addPreferencesFromResource(R.xml.preferences);
+        mApp = getApplication();
         
 
        bindPreferenceSummaryToValue(findPreference("sortBy_list"));
         bindPreferenceSummaryToValue(findPreference("duration_list"));
         bindPreferenceSummaryToValue(findPreference("location_list"));
         bindPreferenceSummaryToValue(findPreference("weatherFriendly"));
+
+
     }
+
 
     /**
      * Set up the {@link android.app.ActionBar}, if the API is available.
@@ -96,6 +78,51 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         }
     }
 
+    private static Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener = new Preference.OnPreferenceChangeListener() {
+        @Override
+        public boolean onPreferenceChange(Preference preference, Object value) {
+            String stringValue = value.toString();
 
+            switch (preference.getTitle().toString()) {
+                case ("Sort By"):
+                    AppPreferences.instance(mApp).saveTourSorting(value.toString());
+                    break;
+                case ("Duration"):
+                    AppPreferences.instance(mApp).saveTourDuration(value.toString());
+                    break;
+                case ("Location"):
+                    AppPreferences.instance(mApp).saveTourLocation(value.toString());
+                    break;
+                case ("Weather: Rainy friend tours"):
+                    if (value.toString().equals("true")) {
+                        AppPreferences.instance(mApp).saveShowRainFriendlyTours(true);
+                    } else {
+                        AppPreferences.instance(mApp).saveShowRainFriendlyTours(false);
+                    }
+                    break;
+
+            }
+
+
+            if (preference instanceof ListPreference) {
+                // For list preferences, look up the correct display value in
+                // the preference's 'entries' list.
+                ListPreference listPreference = (ListPreference) preference;
+                int index = listPreference.findIndexOfValue(stringValue);
+
+                // Set the summary to reflect the new value.
+                preference.setSummary(
+                        index >= 0
+                                ? listPreference.getEntries()[index]
+                                : null);
+
+            } else {
+                // For all other preferences, set the summary to the value's
+                // simple string representation.
+                preference.setSummary(stringValue);
+            }
+            return true;
+        }
+    };
 
 }

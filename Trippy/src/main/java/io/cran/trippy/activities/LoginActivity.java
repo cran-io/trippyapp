@@ -26,6 +26,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
@@ -38,6 +39,7 @@ import java.net.URL;
 import java.util.Arrays;
 
 import io.cran.trippy.R;
+import io.cran.trippy.utils.AppPreferences;
 
 /**
  * A login screen that offers login via email/password.
@@ -51,12 +53,16 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private String birthday= null;
     private String name=null;
     private String id=null;
-    private Uri imageUri=null;
+    private String imageUri = null;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (AppPreferences.instance(getApplication()).getSessionOpen()){
+            Intent i = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(i);
+        }
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_login);
 
@@ -79,6 +85,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         facebookLoginBtn.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
+                Bundle parameters = new Bundle();
+                parameters.putString("fields", "id,name,email,gender,birthday,picture.type(large)");
                 GraphRequest request = GraphRequest.newMeRequest(
                         loginResult.getAccessToken(),
                         new GraphRequest.GraphJSONObjectCallback() {
@@ -91,27 +99,38 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                     birthday = object.getString("birthday"); // 01/31/1980 format
                                     name= object.getString("name");
                                     id= object.getString("id");
+                                    AppPreferences.instance(getApplication()).saveUsername(name);
+                                    AppPreferences.instance(getApplication()).saveUserMail(email);
+                                    JSONObject data = response.getJSONObject();
+                                    if (data.has("picture")) {
+                                        String profilePicUrl = data.getJSONObject("picture").getJSONObject("data").getString("url");
+                                        imageUri = profilePicUrl;
+                                        AppPreferences.instance(getApplication()).saveUserImage(imageUri);
 
-                                    imageUri= Uri.parse("http://graph.facebook.com/"+id+"/picture?type=large");
+                                    }
+
+                                    //imageUri= Uri.parse("http://graph.facebook.com/"+id+"/picture?type=large");
 
                                     ParseUser newUser= new ParseUser();
                                     newUser.setUsername(email);
                                     newUser.setEmail(email);
+                                    newUser.setPassword("solrubado");
                                     newUser.put("birthdate", birthday);
                                     newUser.signUpInBackground(new SignUpCallback() {
                                         @Override
                                         public void done(ParseException e) {
                                             if (e == null) {
                                                 Intent i = new Intent(LoginActivity.this, MainActivity.class);
-                                                i.putExtra("User name", name);
-                                                i.putExtra("User mail", email);
-                                                i.putExtra("Password", "solrubado");
-                                                i.setData(imageUri);
                                                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                                 startActivity(i);
+                                                finish();
                                             } else {
-                                                Toast.makeText(LoginActivity.this, "" + e.getMessage(), Toast.LENGTH_LONG).show();
+                                                if (e.getCode() == 202) {  //User already exists
+                                                    Login();
+                                                } else {
+                                                    Toast.makeText(LoginActivity.this, "" + e.getMessage(), Toast.LENGTH_LONG).show();
+                                                }
                                             }
                                         }
                                     });
@@ -127,8 +146,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
 
 
-                Bundle parameters = new Bundle();
-                parameters.putString("fields", "id,name,email,gender,birthday");
+
                 request.setParameters(parameters);
                 request.executeAsync();
 
@@ -170,6 +188,23 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     }
 
+    private void Login() {
+        ParseUser.logInInBackground(AppPreferences.instance(getApplication()).getUserEmail(), "solrubado", new LogInCallback() {
+            @Override
+            public void done(ParseUser user, ParseException e) {
+                if (e == null) {
+                    Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                    i.putExtra("User mail", email);
+                    startActivity(i);
+                    finish();
+                } else {
+                    Toast.makeText(LoginActivity.this, "Incorrect username or password", Toast.LENGTH_LONG).show();
+                }
+            }
+
+        });
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -187,7 +222,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             final GoogleSignInAccount acct = result.getSignInAccount();
 
             Log.e("URL", "" + acct.getPhotoUrl());
-
             ParseUser newUser= new ParseUser();
             newUser.setUsername(acct.getEmail());
             newUser.setPassword("solrubado");
@@ -197,13 +231,20 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 public void done(ParseException e) {
                     if (e == null) {
                         Intent i = new Intent(LoginActivity.this, MainActivity.class);
-                        i.putExtra("User name", acct.getDisplayName());
-                        i.putExtra("Password", "solrubado");
-                        i.putExtra("User mail", acct.getEmail());
+                        email=acct.getEmail();
+                        name=acct.getDisplayName();
+                        imageUri=acct.getPhotoUrl().toString();
+                        AppPreferences.instance(getApplication()).saveUserImage(imageUri);
+                        AppPreferences.instance(getApplication()).saveUsername(name);
+                        AppPreferences.instance(getApplication()).saveUserMail(email);
                         i.setData(acct.getPhotoUrl());
                         startActivity(i);
                     } else {
-                        Toast.makeText(LoginActivity.this, "" + e.getMessage(), Toast.LENGTH_LONG).show();
+                        if (e.getCode() == 202) {  //User already exists
+                            Login();
+                        } else {
+                            Toast.makeText(LoginActivity.this, "" + e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
                     }
                 }
             });

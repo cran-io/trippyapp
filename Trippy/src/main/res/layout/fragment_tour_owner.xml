@@ -12,7 +12,7 @@
         android:background="#dfcde5">
 
         <io.cran.trippy.utils.CircleImageView
-            android:id="@+id/profilePic"
+            android:id="@+id/profileOwnerPic"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_alignTop="@+id/tourOwner"
@@ -38,7 +38,7 @@
             android:layout_below="@id/tourOwner"
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="20sp"
-            android:layout_toRightOf="@id/profilePic"
+            android:layout_toRightOf="@id/profileOwnerPic"
             android:layout_marginTop="5sp"
             android:text="Tour Quantity" />
 
@@ -50,7 +50,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="20sp"
             android:layout_marginBottom="20sp"
-            android:layout_toRightOf="@id/profilePic"
+            android:layout_toRightOf="@id/profileOwnerPic"
             android:layout_marginTop="5sp"
             android:text="Recommend this agency"
             android:textColor="#72218c" />
